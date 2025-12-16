@@ -42,7 +42,7 @@ export const signUp = async (req, res) => {
     });
 
     //return
-    return res.sendStatus(204);
+    return res.status(201).json({message: "Successfully created"});
   } catch (error) {
     console.log(`Loi khi goi signup`, error);
     res.status(500).json({ message: "loi he thong" });
@@ -73,9 +73,9 @@ export const signOut = async (req, res) => {
 export const signIn = async (req, res) => {
   try {
     //lay input tu body
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!username || !password) {
+    if (!email || !password) {
       return res
         .status(400)
         .json({ message: "Please in put username and password" });
@@ -83,7 +83,7 @@ export const signIn = async (req, res) => {
 
     //lay hash password de so sanh voi password
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (!user) {
       res.status(401).json({ message: "Incorrect username or password" });
@@ -91,9 +91,9 @@ export const signIn = async (req, res) => {
 
     //kiem tra pass
 
-    const passwordCorrect = bcrypt.compare(password, user.hashedPassword);
+    const passwordCorrect = await bcrypt.compare(password, user.hashedPassword);
     if (!passwordCorrect) {
-      res.status(401).json({ message: "Incorrect username or password" });
+      return res.status(401).json({ message: "Incorrect username or password" });
     }
 
     //neu dung tao access voi jwt
@@ -125,6 +125,7 @@ export const signIn = async (req, res) => {
     return res.status(200).json({
       message: `User ${user.displayName} have logged in`,
       accessToken,
+      user
     });
   } catch (error) {
     console.log("Error in sign in ", error);
