@@ -8,8 +8,15 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { ArrowUpRightIcon, icons, Plus } from "lucide-react";
+import type React from "react";
 
-export default function Sidebar() {
+//Dinh nghia props 
+interface SidebarLayoutProps {
+  children?: React.ReactNode;
+}
+
+
+export default function Sidebar({ children }: SidebarLayoutProps) {
   return (
     <SidebarProvider
       style={
@@ -32,6 +39,12 @@ export default function Sidebar() {
             </Button>
           </div>
         </header>
+        
+
+        <div className="flex flex-col gap-4">
+          {children}
+        </div>
+
       </SidebarInset>
     </SidebarProvider>
   );

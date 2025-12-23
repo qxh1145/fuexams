@@ -7,6 +7,10 @@ import TestPage from "./pages/TestPage";
 import { NotFound } from "./pages/error/NotFound";
 import { Comingsoon } from "./pages/error/Comingsoon";
 import { Toaster } from "sonner";
+import SeSubject from "./components/se-subject";
+import McSubject from "./components/mc-subject";
+import TestLobby from "./pages/TestLobby";
+import {TakingTest} from "./pages/TakingTest";
 function App() {
   return (
     <>
@@ -21,11 +25,20 @@ function App() {
           <Route path="/home" element={<Home />} />
 
           <Route path="/" element={<HomePage />} />
-          <Route path="/test" element={<TestPage />} />
+          <Route path="/test" element={<TestLobby />} />
+          {/* <Route path="/exams" element={<ExamsDisplay/>}/> */}
+
+          <Route path="/se" element={<SeSubject />} />
+          <Route path="/mc" element={<McSubject />} />
+
+
+
+
+          <Route path="/test/:slug" element={<TakingTest />} />
 
           {/*Error handling */}
           <Route path="*" element={<NotFound />} />
-          <Route path="/coming" element={<Comingsoon/>}/>
+          <Route path="/coming" element={<Comingsoon />} />
         </Routes>
       </BrowserRouter>
     </>
