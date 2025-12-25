@@ -14,6 +14,7 @@ export interface IExam {
     visibility: string;
     durationMinutes: number;
     questions: IQuestionList[];
+    slug: string;
 }
 
 export interface IQuestionList {
@@ -25,7 +26,7 @@ export interface IQuestionList {
 
 export interface IOptions {
     text: string;
-    isCorrect: string;
+    isCorrect: boolean;
 }
 
 interface ExamState {

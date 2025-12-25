@@ -15,10 +15,12 @@ import { Button } from '@/components/ui/button'
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux'
 import { getExams } from '@/features/exams/testSlice.js'
 import { getFolder } from '@/features/exams/examSlice'
+import { useNavigate } from 'react-router'
 
 
 const TestLobby = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const { exams, isLoading } = useAppSelector((state) => state.exam)
     const { folder } = useAppSelector((state) => state.folder)
@@ -45,7 +47,7 @@ const TestLobby = () => {
                             </ItemDescription>
                         </ItemContent>
                         <ItemActions>
-                            <Button variant="outline" size="sm">
+                            <Button variant="outline" size="sm" onClick={() => navigate(`/test/${exam.slug}`)}>
                                 Take exam
                             </Button>
                         </ItemActions>
