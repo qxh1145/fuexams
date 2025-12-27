@@ -12,6 +12,7 @@ export interface IFolder {
     authorId: string;
     parentId: string | null;
     path: string | null;
+    belongto: string[];
 }
 
 interface FolderState {

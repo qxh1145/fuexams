@@ -88,14 +88,14 @@ const TestProcess = () => {
         }
 
         //da chon du sl
-        if(isSelected){
-            return op.isCorrect 
-            ? cn(baseClass, 'bg-green-200 border-green-600 text-green-800 hover:bg-green-200 hover:border-green-600 hover:text-green-800')
-            : cn(baseClass, 'bg-red-200 border-red-600 text-red-800 hover:bg-red-200 hover:border-red-600 hover:text-red-800')
+        if (isSelected) {
+            return op.isCorrect
+                ? cn(baseClass, 'bg-green-200 border-green-600 text-green-800 hover:bg-green-200 hover:border-green-600 hover:text-green-800')
+                : cn(baseClass, 'bg-red-200 border-red-600 text-red-800 hover:bg-red-200 hover:border-red-600 hover:text-red-800')
         }
         // Trường hợp C: (Optional) Hiển thị đáp án đúng cho người dùng biết nếu họ chọn sai
         if (op.isCorrect) {
-            return cn(baseClass,`border-green-500 border-dashed text-green-700 hover:border-green-500 hover:border-dashed hover:text-green-700 hover:bg-white-100 `);
+            return cn(baseClass, `border-green-500 border-dashed text-green-700 hover:border-green-500 hover:border-dashed hover:text-green-700 hover:bg-white-100 `);
         }
 
         // Trường hợp D: Các nút còn lại (không chọn, không phải đáp án đúng) -> Làm mờ
@@ -105,12 +105,25 @@ const TestProcess = () => {
     const progressPercent = totalQuestions > 0 ? ((index + 1) / totalQuestions) * 100 : 0;
 
     return (
-        <div>
+        <div className="w-full mx-auto min-h-screen flex flex-col pt-10 px-4">
             <div className="pb-5">
                 <Progress value={progressPercent} className="w-full h-3" />
             </div>
-            <Card>
-                <CardHeader>Question: {index + 1} / {totalQuestions}</CardHeader>
+            <Card className=''>
+                <CardHeader className='flex justify-between'>
+                    
+                    <p>Question: {index + 1} / {totalQuestions}</p>
+                    <div className='flex justify-between gap-15 italic'>
+                        <span className='flex items-center hover:cursor-pointer select-none ' onClick={() => handleChangeQuestion(false)}>
+                            <ChevronLeft /> Previous
+                        </span>
+                        <span className='flex items-center hover:cursor-pointer select-none' onClick={() => handleChangeQuestion(true)}>
+                            Next <ChevronRight />
+                        </span>
+                    </div>
+
+                </CardHeader>
+
                 <CardContent>{questionList[index].content}</CardContent>
 
                 <CardFooter className="block w-full">
@@ -132,14 +145,7 @@ const TestProcess = () => {
                     </div>
                 </CardFooter>
 
-                <div className='flex justify-between p-4 italic'>
-                    <span className='flex items-center hover:cursor-pointer select-none ' onClick={() => handleChangeQuestion(false)}>
-                        <ChevronLeft /> Previous
-                    </span>
-                    <span className='flex items-center hover:cursor-pointer select-none' onClick={() => handleChangeQuestion(true)}>
-                        Next questions <ChevronRight />
-                    </span>
-                </div>
+
             </Card>
         </div>
     )

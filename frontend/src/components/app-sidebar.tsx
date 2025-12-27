@@ -1,24 +1,21 @@
 "use client";
-
+import FueNegativeBoxLogo from '@/components/ui/FueNegativeBoxLogo'
 import * as React from "react";
 import {
+  Archive,
   ArchiveX,
   BookCheck,
+  BookDown,
   Command,
   File,
+  HandFist,
   Inbox,
   Send,
   Sparkles,
   Trash2,
 } from "lucide-react";
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import { NavUser } from "@/components/nav-user";
-import { Label } from "@/components/ui/label";
 import {
   Sidebar,
   SidebarContent,
@@ -35,14 +32,9 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Switch } from "@/components/ui/switch";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@radix-ui/react-tooltip";
-import { getFolder, type IFolder } from "@/features/exams/examSlice";
+
+import { getFolder} from "@/features/exams/examSlice";
 import { FilterMajor } from "@/lib/data";
 import { useNavigate } from "react-router";
 
@@ -104,11 +96,11 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
             <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
               <a href="#">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
+                  <HandFist className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-medium">FUExams</span>
+                  <span className="truncate text-xs">Beta v1.0.0</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -142,6 +134,18 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
                   <span>
                     <a>A.I</a>
                   </span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip={"Tổng hợp source các môn"}>
+                  <Archive /> Tổng hợp source các môn
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem >
+                <SidebarMenuButton tooltip={"Tải đề từ FUO"}>
+                  <BookDown /> Tải đề từ FUO
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

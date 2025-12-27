@@ -23,6 +23,10 @@ const folderSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    belongTo: {
+      type: [String],
+      default: [],
+    }
   },
   {
     timestamps: true,

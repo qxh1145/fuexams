@@ -25,7 +25,7 @@ function App() {
           <Route path="/home" element={<Home />} />
 
           <Route path="/" element={<HomePage />} />
-          <Route path="/test" element={<TestLobby />} />
+          <Route path="/test/:folderid" element={<TestLobby />} />
           {/* <Route path="/exams" element={<ExamsDisplay/>}/> */}
 
           <Route path="/se" element={<SeSubject />} />
@@ -34,7 +34,7 @@ function App() {
 
 
 
-          <Route path="/test/:slug" element={<TakingTest />} />
+          <Route path="/test/do-test/:slug" element={<TakingTest />} />
 
           {/*Error handling */}
           <Route path="*" element={<NotFound />} />
