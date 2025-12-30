@@ -37,7 +37,7 @@ export default function Sidebar({ children }: SidebarLayoutProps) {
       }
     >
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="from-muted/50 to-background h-full bg-gradient-to-b from-30%" >
         <header className="bg-background sticky top-0 flex shrink-0 items-center border-b p-4  ">
           <div className="grid grid-cols-3 w-full">
             <SidebarTrigger size="icon-lg" className="-ml-1" />

@@ -1,5 +1,5 @@
 import { SearchIcon } from "lucide-react"
-
+import FuzzyText from '@/components/FuzzyText'
 import {
   Empty,
   EmptyContent,
@@ -13,27 +13,37 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group"
 import { Kbd } from "@/components/ui/kbd"
+import { SearchInput } from "@/components/search-input"
 
 export function NotFound() {
   return (
+
     <Empty>
-      <EmptyHeader>
-        <EmptyTitle>404 - Not Found</EmptyTitle>
-        <EmptyDescription>
-          The page you&apos;re looking for doesn&apos;t exist. Try searching for
-          what you need below.
-        </EmptyDescription>
-      </EmptyHeader>
+      {/* <EmptyHeader> */}
+
+
+      {/*          
+          <EmptyDescription>
+            The page you&apos;re looking for doesn&apos;t exist. Try searching for
+            what you need below.
+          </EmptyDescription> */}
+      {/* </EmptyHeader> */}
+      <FuzzyText
+        baseIntensity={0.41}
+        hoverIntensity={1.17}
+        letterSpacing={13}
+      >
+        404
+      </FuzzyText>
+
       <EmptyContent>
-        <InputGroup className="sm:w-3/4">
-          <InputGroupInput placeholder="Try searching for pages..." />
-          <InputGroupAddon>
+        {/* <InputGroupAddon>
             <SearchIcon />
           </InputGroupAddon>
           <InputGroupAddon align="inline-end">
             <Kbd>/</Kbd>
-          </InputGroupAddon>
-        </InputGroup>
+          </InputGroupAddon> */}
+        <SearchInput />
         <EmptyDescription>
           Need help? <a href="#">Contact support</a>
         </EmptyDescription>

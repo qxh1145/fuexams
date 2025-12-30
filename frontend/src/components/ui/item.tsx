@@ -54,7 +54,7 @@ const itemVariants = cva(
 function Item({
   className,
   variant = "default",
-  size = "default",
+  size = "sm",
   asChild = false,
   ...props
 }: React.ComponentProps<"div"> &
@@ -121,7 +121,7 @@ function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="item-title"
       className={cn(
-        "flex w-fit items-center gap-2 text-sm leading-snug font-medium",
+        "flex w-fit items-center gap-2 text-xl leading-snug font-medium",
         className
       )}
       {...props}
@@ -158,7 +158,7 @@ function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="item-header"
       className={cn(
-        "flex basis-full items-center justify-between gap-2",
+        "flex basis-full items-center justify-between gap-2 justify-center",
         className
       )}
       {...props}

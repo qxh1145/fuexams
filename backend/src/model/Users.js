@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { ROLES } from '../constants/Roles.js'; 
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       sparse: true, //cho phep null, nhung ko dc trung
     },
+    role: {
+      type: String,
+      enum: Object.values(ROLES),
+      default: ROLES.BASIC
+    }
   },
   {
     timestamps: true,

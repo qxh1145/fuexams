@@ -10,7 +10,9 @@ import { Toaster } from "sonner";
 import SeSubject from "./components/se-subject";
 import McSubject from "./components/mc-subject";
 import TestLobby from "./pages/TestLobby";
-import {TakingTest} from "./pages/TakingTest";
+import { TakingTest } from "./pages/TakingTest";
+import PrivateRoles from "./components/PrivateRoutes";
+import { ROLES } from "./constants/roles";
 function App() {
   return (
     <>
@@ -21,20 +23,26 @@ function App() {
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
 
-          {/*Page main*/}
-          <Route path="/home" element={<Home />} />
-
           <Route path="/" element={<HomePage />} />
-          <Route path="/test/:folderid" element={<TestLobby />} />
-          {/* <Route path="/exams" element={<ExamsDisplay/>}/> */}
 
-          <Route path="/se" element={<SeSubject />} />
-          <Route path="/mc" element={<McSubject />} />
+          {/*Page main*/}
+          <Route element={<PrivateRoles allowedRoles={[ROLES.ADMIN, ROLES.PREMIUM, ROLES.BASIC]} />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/test/:folderid" element={<TestLobby />} />
+            {/* <Route path="/exams" element={<ExamsDisplay/>}/> */}
 
 
+            <Route path="/mc" element={<McSubject />} />
+            <Route path="/se" element={<SeSubject />} />
+            <Route path="/test/do-test/:slug" element={<TakingTest />} />
+
+            {/*Premium only*/}
+            <Route element={<PrivateRoles allowedRoles={[ROLES.ADMIN, ROLES.PREMIUM]} />}>
+              
+            </Route>
+          </Route>
 
 
-          <Route path="/test/do-test/:slug" element={<TakingTest />} />
 
           {/*Error handling */}
           <Route path="*" element={<NotFound />} />

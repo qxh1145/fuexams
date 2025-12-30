@@ -15,6 +15,9 @@ import {
   Trash2,
 } from "lucide-react";
 
+import GradientText from '@/components/GradientText'
+
+
 import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
@@ -34,7 +37,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 
-import { getFolder} from "@/features/exams/examSlice";
+import { getFolder } from "@/features/exams/examSlice";
 import { FilterMajor } from "@/lib/data";
 import { useNavigate } from "react-router";
 
@@ -100,7 +103,7 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">FUExams</span>
-                  <span className="truncate text-xs">Beta v1.0.0</span>
+                  <span className="truncate text-xs">{(currentUser?.role)?.toUpperCase()}</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -131,9 +134,13 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
               <SidebarMenuItem>
                 <SidebarMenuButton tooltip="AI">
                   <Sparkles />
-                  <span>
-                    <a>A.I</a>
-                  </span>
+                  <GradientText
+                    colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
+                    animationSpeed={3}
+                    showBorder={false}
+                  >
+                    FUExams A.I
+                  </GradientText>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 

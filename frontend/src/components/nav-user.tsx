@@ -1,5 +1,5 @@
 "use client";
-import { useAppDispatch } from "@/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import {
   BadgeCheck,
   Bell,
@@ -27,6 +27,9 @@ import {
 } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router";
 import { logout } from "@/features/auth/authSlice";
+import { ROLES } from "@/constants/roles";
+import GradientText from "./GradientText";
+import { Badge } from "./ui/badge";
 
 interface UserProbs {
   username: string;
@@ -37,7 +40,7 @@ interface NavUserProbs {
   user: UserProbs | null
 }
 
-export function NavUser({user}: NavUserProbs) {
+export function NavUser({ user }: NavUserProbs) {
   const { isMobile } = useSidebar();
 
   const dispatch = useAppDispatch();
@@ -46,6 +49,7 @@ export function NavUser({user}: NavUserProbs) {
     dispatch(logout());
     navigate("/signin");
   };
+  const { currentUser } = useAppSelector((state) => state.auth);
 
   return (
     <SidebarMenu>
@@ -58,11 +62,22 @@ export function NavUser({user}: NavUserProbs) {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage alt={user?.username} />
-                <AvatarFallback className="rounded-lg">{user?.username.slice(0,1)}</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{user?.username.slice(0, 1)}</AvatarFallback>
               </Avatar>
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user?.username}</span>
+                  {currentUser?.role === ROLES.PREMIUM || currentUser?.role === ROLES.ADMIN ?
+                    (
+                      <div className="flex"><GradientText
+                        colors={["#5227FF", "#FF9FFC", "#B19EEF", "#761414", "#ff0a0a", "#510606"]}
+                        animationSpeed={5}
+                        className="custom-class"
+                      >
+                        <span className="truncate font-medium">{user?.username}</span>
+                      </GradientText>
+                      </div>
+                    ) : <span className="truncate font-medium">{user?.username}</span>}
+
                   <span className="truncate text-xs">{user?.email}</span>
                 </div>
               </div>
@@ -80,7 +95,7 @@ export function NavUser({user}: NavUserProbs) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage alt={user?.username} />
-                  <AvatarFallback className="rounded-lg">{user?.username.slice(0,1)}</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">{user?.username.slice(0, 1)}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user?.username}</span>
@@ -113,7 +128,7 @@ export function NavUser({user}: NavUserProbs) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className="text-destructive">
-              <LogOut color="#ff0000"/>
+              <LogOut color="#ff0000" />
               <p>Log out</p>
             </DropdownMenuItem>
           </DropdownMenuContent>
