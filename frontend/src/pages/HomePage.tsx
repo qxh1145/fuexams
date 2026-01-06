@@ -22,7 +22,7 @@ const HomePage = () => {
             text={'Bạn muốn học như thế nào ? '}
             delay={30}
             duration={2}
-            className="pt-20 scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance" onLetterAnimationComplete={undefined} />
+            className="pt-20 text-center text-4xl font-extrabold tracking-tight text-balance" onLetterAnimationComplete={undefined} />
           <div className="justify-center place-items-center mt-5">
             <BlurText
               text="Nắm vững kiến thức đang học với bài kiểm tra thử và hoạt động học tập kết hợp với kho tàng tài nguyên học tập được chắt lọc của FUExams."
@@ -33,14 +33,14 @@ const HomePage = () => {
           </div>
 
           <div className=" w-full place-items-center">
-            <div className="grid grid-cols-4 gap-7 p-20">
+            <div className="grid grid-cols-4 w-full gap-7 p-10">
               <Item variant={'outline'}>
                 <ItemHeader>
                   <ItemTitle>Kiểm tra năng lực</ItemTitle>
 
                 </ItemHeader>
                 <ItemContent>
-                  <div className=" aspect-square w-full rounded-sm object-cover"><img src={img1} /></div>
+                  <div className="aspect-square rounded-sm object-cover"><img src={img1} /></div>
                 </ItemContent>
               </Item>
 
@@ -73,7 +73,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="grid place-items-center"><Button variant={'outline'} className="w-2xs hover:bg-gray-300" onClick={() => navigate('/signin')}>
+        <div className="flex w-full justify-center p-5"><Button variant={'outline'} className="w-2xs hover:bg-gray-300" onClick={() => navigate('/signin')}>
           <ShinyText
             text="Bắt đầu ngay"
             speed={2}
@@ -89,7 +89,7 @@ const HomePage = () => {
         </Button></div>
       </div>
 
-      <div className="border">
+      <div className="border w-full">
         <div className="grid p-10 place-items-center gap-4 "><div>©2025 FUExams – được hỗ trợ bởi AI đưa sức mạnh vào tay bạn.</div>
           <div>
             <ButtonGroup className="gap-4 hover:cursor-pointer">
