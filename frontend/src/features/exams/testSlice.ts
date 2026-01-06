@@ -4,12 +4,11 @@ import {
     type PayloadAction,
 } from "@reduxjs/toolkit";
 import axiosClient from "@/service/axiosClient";
-import { getFolder } from "./examSlice";
 
 export interface IExam {
     _id: string;
     title: string;
-    folderId: string;
+    folderId: string | null;
     authorId: string;
     visibility: string;
     durationMinutes: number;
@@ -51,6 +50,20 @@ interface ExamRespone {
     message: string
 }
 
+interface ExamInput {
+    title: string,
+    folderId: string | null,
+    authorId: string,
+    slug: string,
+    questions: QuestionInput[]
+
+}
+interface QuestionInput {
+    type: string,
+    score: number,
+    content: string,
+    options: IOptions[]
+}
 
 const examSlice = createSlice({
     name: 'exam',
@@ -89,6 +102,17 @@ export const getExams = createAsyncThunk<ExamRespone, void, {rejectValue: string
         return thunkAPI.rejectWithValue('Error while get exam ')
     }
 })
+export const addExams = createAsyncThunk<ExamRespone, ExamInput, {rejectValue: string}>('exams/create', async (payload, {rejectWithValue}) => {
+    try {
+    const response = await axiosClient.post('/exams/create', payload)
+    localStorage.setItem("message", response.message);
+
+    return response;
+    } catch (error) {
+        return rejectWithValue("An error has occur")
+    }
+}) 
+
 
 export const {setCurrentExam} = examSlice.actions;
 export default examSlice.reducer

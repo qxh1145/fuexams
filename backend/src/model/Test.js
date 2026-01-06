@@ -6,7 +6,7 @@ import slug from "mongoose-slug-updater";
 
 mongoose.plugin(slug);
 const questionSchema = mongoose.Schema({
-  title: {
+  type: {
     type: String,
     required: true,
   },
@@ -46,7 +46,6 @@ const testSchema = mongoose.Schema(
     authorId: {
       type: String,
       ref: "User",
-      visibility: Boolean,
     },
     slug: {
       type: String,

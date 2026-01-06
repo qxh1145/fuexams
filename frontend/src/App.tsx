@@ -13,6 +13,7 @@ import TestLobby from "./pages/TestLobby";
 import { TakingTest } from "./pages/TakingTest";
 import PrivateRoles from "./components/PrivateRoutes";
 import { ROLES } from "./constants/roles";
+import CreateExams from "./pages/CreateExams";
 function App() {
   return (
     <>
@@ -35,6 +36,7 @@ function App() {
             <Route path="/mc" element={<McSubject />} />
             <Route path="/se" element={<SeSubject />} />
             <Route path="/test/do-test/:slug" element={<TakingTest />} />
+            <Route path="/create-exams" element={<CreateExams/>}/>
 
             {/*Premium only*/}
             <Route element={<PrivateRoles allowedRoles={[ROLES.ADMIN, ROLES.PREMIUM]} />}>

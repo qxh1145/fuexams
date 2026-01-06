@@ -26,6 +26,7 @@ app.use(protectedRoute)
 app.use('/users', userRoute)
 
 
+
 connectDB().then(() => {
     app.listen(PORT, () =>{
         console.log(`running on ${PORT}`)

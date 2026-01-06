@@ -158,7 +158,7 @@ function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="item-header"
       className={cn(
-        "flex basis-full items-center justify-between gap-2 justify-center",
+        "flex basis-full items-center justify-between gap-2 ",
         className
       )}
       {...props}

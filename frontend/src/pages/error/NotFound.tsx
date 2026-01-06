@@ -20,22 +20,31 @@ export function NotFound() {
 
     <Empty>
       {/* <EmptyHeader> */}
-
-
       {/*          
           <EmptyDescription>
             The page you&apos;re looking for doesn&apos;t exist. Try searching for
             what you need below.
           </EmptyDescription> */}
       {/* </EmptyHeader> */}
-      <FuzzyText
-        baseIntensity={0.41}
-        hoverIntensity={1.17}
-        letterSpacing={13}
-      >
-        404
-      </FuzzyText>
+      <EmptyHeader>
+        <div style={{ height: '100px', width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <FuzzyText
+            fontSize="4rem" // Đặt font to lên để canvas có chiều cao
+            baseIntensity={0.41}
+            hoverIntensity={1.17}
+            letterSpacing={13}
+            fuzzRange={40}
+            color="red" 
+          >
+            4 0 4
+          </FuzzyText>
+        </div>
 
+        {/* EmptyDescription chỉ nên dùng cho text phụ bên dưới */}
+        <EmptyDescription>
+          Trang bạn tìm kiếm không tồn tại
+        </EmptyDescription>
+      </EmptyHeader>
       <EmptyContent>
         {/* <InputGroupAddon>
             <SearchIcon />

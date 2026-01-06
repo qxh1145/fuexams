@@ -7,13 +7,16 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { ArrowUpRightIcon, icons, Plus, Search } from "lucide-react";
+import { ArrowUpRightIcon, icons, Plus, ScrollText, Search } from "lucide-react";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { getExams, type IExam } from "@/features/exams/testSlice";
 import { getFolder, type IFolder } from "@/features/exams/examSlice";
 import { SearchInput } from "@/components/search-input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
+import { useNavigate } from "react-router";
 
 //Dinh nghia props 
 interface SidebarLayoutProps {
@@ -27,7 +30,9 @@ interface IAll {
 
 
 export default function Sidebar({ children }: SidebarLayoutProps) {
-
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState("")
+  const navigate = useNavigate();
   return (
     <SidebarProvider
       style={
@@ -42,13 +47,29 @@ export default function Sidebar({ children }: SidebarLayoutProps) {
           <div className="grid grid-cols-3 w-full">
             <SidebarTrigger size="icon-lg" className="-ml-1" />
             {/* <Input className="" /> */}
-            <SearchInput/>
-            <Button
-              className="justify-self-end rounded-4xl"
-              size="icon-lg"
-            >
-              <Plus />
-            </Button>
+            <SearchInput />
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  className="justify-self-end rounded-4xl"
+                  size="icon-lg"
+                  role="combobox"
+                  aria-expanded={open}
+                >
+                  <Plus />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px] p-0">
+                <Command>
+                  <CommandList>
+                    <CommandEmpty>No framework found.</CommandEmpty>
+                    <CommandGroup>
+                      <CommandItem onSelect={() => navigate("/create-exams")}><ScrollText />Tạo đề thi</CommandItem>
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover >
           </div>
         </header>
 
@@ -58,6 +79,6 @@ export default function Sidebar({ children }: SidebarLayoutProps) {
         </div>
 
       </SidebarInset>
-    </SidebarProvider>
+    </SidebarProvider >
   );
 }
