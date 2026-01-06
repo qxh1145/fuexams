@@ -50,7 +50,7 @@ export const getAllFolder = async (req, res) => {
 
 export const addNewExams = async (req, res) => {
   try {
-    const { title, folderId, authoriId, slug, duration, questions } = req.body;
+    const { title, folderId, authorId, slug, duration, questions } = req.body;
 
     console.log(questions);
 
@@ -63,7 +63,7 @@ export const addNewExams = async (req, res) => {
     const newExam = new Test({
       title,
       folderId,
-      authoriId,
+      authorId,
       slug,
       duration,
       questions,
