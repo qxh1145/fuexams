@@ -14,6 +14,7 @@ import { TakingTest } from "./pages/TakingTest";
 import PrivateRoles from "./components/PrivateRoutes";
 import { ROLES } from "./constants/roles";
 import CreateExams from "./pages/CreateExams";
+import MyExams from "./pages/MyExams";
 function App() {
   return (
     <>
@@ -36,6 +37,7 @@ function App() {
             <Route path="/mc" element={<McSubject />} />
             <Route path="/se" element={<SeSubject />} />
             <Route path="/test/do-test/:slug" element={<TakingTest />} />
+            <Route path="/my-exams" element={<MyExams/>}/>
             <Route path="/create-exams" element={<CreateExams/>}/>
 
             {/*Premium only*/}

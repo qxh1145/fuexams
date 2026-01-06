@@ -14,7 +14,7 @@ const TestProcess = () => {
 
     // 2. State lưu ID đáp án người dùng ĐÃ CHỌN (Quan trọng: Lưu ID, không lưu boolean)
     // Nếu null nghĩa là chưa chọn gì cả.
-    const [selectedOptionText, setSelectedOptionText] = useState<string[]>([]);
+    const [selectedOptionText, setSelectedOptionText] = useState<string[]>([]); // luu kieu du lieu la mang string, gia tri khoi tao la mang rong
 
     const dispatch = useAppDispatch()
     const { slug: examSlug } = useParams<{ slug: string }>();
@@ -65,14 +65,6 @@ const TestProcess = () => {
         }
     }
 
-    // // 4. Hàm xử lý khi người dùng CLICK vào một đáp án
-    // const handleCheckOption = (optionId: string) => {
-    //     // Nếu đã chọn rồi thì chặn không cho chọn lại (tránh spam)
-    //     if (selectedOptionText) return;
-
-    //     // Lưu ID của đáp án vừa click vào state
-    //     setSelectedOptionText(optionId);
-    // }
 
     // 5. Hàm tính toán Class CSS cho từng nút (Dynamic Styling)
     const getOptionClass = (op: IOptions) => {

@@ -5,6 +5,7 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
+  Folder,
   LogOut,
   Sparkles,
 } from "lucide-react";
@@ -55,6 +56,7 @@ export function NavUser({ user }: NavUserProbs) {
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
+
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -85,6 +87,7 @@ export function NavUser({ user }: NavUserProbs) {
               {/* <ChevronsUpDown className="ml-auto size-4" /> */}
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
@@ -105,13 +108,16 @@ export function NavUser({ user }: NavUserProbs) {
             </DropdownMenuLabel>
 
             <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Sparkles />
                 Upgrade to Pro
               </DropdownMenuItem>
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
@@ -126,12 +132,25 @@ export function NavUser({ user }: NavUserProbs) {
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout} className="text-destructive">
-              <LogOut color="#ff0000" />
-              <p>Log out</p>
-            </DropdownMenuItem>
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={() => navigate("/my-exams")}>
+                <Folder />
+                My Exams
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+
+              <DropdownMenuItem onClick={handleLogout} className="text-destructive">
+                <LogOut color="#ff0000" />
+                <p>Log out</p>
+              </DropdownMenuItem>
           </DropdownMenuContent>
+
+
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
