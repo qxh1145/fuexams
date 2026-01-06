@@ -145,7 +145,7 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip={"Tổng hợp source các môn"}>
+                <SidebarMenuButton onClick={() => navigate("/subjects-src")} tooltip={"Tổng hợp source các môn"}>
                   <Archive /> Tổng hợp source các môn
                 </SidebarMenuButton>
               </SidebarMenuItem>

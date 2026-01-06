@@ -11,7 +11,7 @@ export interface IExam {
     folderId: string | null;
     authorId: string;
     visibility: string;
-    durationMinutes: number;
+    duration: number;
     questions: IQuestionList[];
     slug: string;
 }

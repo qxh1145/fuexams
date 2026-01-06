@@ -1,5 +1,5 @@
 import { Bell, House, RefreshCcwIcon } from "lucide-react"
-
+import underdev from "@/assets/underdevelop.png"
 import { Button } from "@/components/ui/button"
 import {
   Empty,
@@ -16,15 +16,12 @@ export function Comingsoon() {
     const navigate = useNavigate()
   return (
     
-    <Empty className="mt-[20%]">
+    <Empty className="flex h-screen w-screen items-center">
       <EmptyHeader>
-        <EmptyMedia variant="icon">
-          <Bell />
+        <EmptyMedia className="" variant="default">
+          <img className="" src={underdev} alt="" />
         </EmptyMedia>
-        <EmptyTitle>No Notifications</EmptyTitle>
-        <EmptyDescription>
-          You&apos;re all caught up. New notifications will appear here.
-        </EmptyDescription>
+        <EmptyTitle>This feature is under development. Stay tuned! </EmptyTitle>
       </EmptyHeader>
       <EmptyContent>
         <Button variant="outline" size="sm" onClick={() =>navigate('/home')}>

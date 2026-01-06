@@ -18,7 +18,7 @@ import { SearchInput } from "@/components/search-input"
 export function NotFound() {
   return (
 
-    <Empty>
+    <Empty className="flex h-screen items-center">
       {/* <EmptyHeader> */}
       {/*          
           <EmptyDescription>

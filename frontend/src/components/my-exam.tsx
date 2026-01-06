@@ -15,7 +15,7 @@ const MyExam = () => {
                     <ItemContent>
                         <ItemTitle>{exam.title}</ItemTitle>
                         <ItemDescription>
-                            Duration: {exam.durationMinutes} minutes <br /> Number of questions: {exam.questions.length}
+                            Duration: {exam.duration} minutes <br /> Number of questions: {exam.questions.length}
                         </ItemDescription>
                     </ItemContent>
                     <ItemActions>
