@@ -101,9 +101,9 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <HandFist className="size-4" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
+                <div className="grid flex-1 text-left text-sm leading-tight" onClick={() => navigate("/home")}>
                   <span className="truncate font-medium">FUExams</span>
-                  <span className="truncate text-xs">{(currentUser?.role)?.toUpperCase()}</span>
+                  <span className="truncate text-xs">{(currentUser?.role)?.toUpperCase()}</span>  
                 </div>
               </a>
             </SidebarMenuButton>

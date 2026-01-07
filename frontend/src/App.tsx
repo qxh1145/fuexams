@@ -15,6 +15,7 @@ import PrivateRoles from "./components/PrivateRoutes";
 import { ROLES } from "./constants/roles";
 import CreateExams from "./pages/CreateExams";
 import MyExams from "./pages/MyExams";
+import UpGradePage from "./pages/UpGradePage";
 function App() {
   return (
     <>
@@ -39,6 +40,7 @@ function App() {
             <Route path="/test/do-test/:slug" element={<TakingTest />} />
             <Route path="/my-exams" element={<MyExams />} />
             <Route path="/create-exams" element={<CreateExams />} />
+            <Route path="/upgrade" element= {<UpGradePage/>}/>
 
             {/*Premium only*/}
             <Route element={<PrivateRoles allowedRoles={[ROLES.ADMIN, ROLES.PREMIUM]} />}>
