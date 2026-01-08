@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import {
   Item,
+  ItemActions,
   ItemContent,
   ItemDescription,
   ItemGroup,
   ItemHeader,
 } from "@/components/ui/item";
 import { Description } from "@radix-ui/react-dialog";
-import { ArrowLeft, Sparkles, X } from "lucide-react";
+import { ArrowLeft, CircleCheck, Sparkles, X } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import GradientText from "@/components/GradientText";
@@ -24,8 +25,7 @@ const UpGradePage = () => {
       price: "29.000",
       feature: [
         "Truy cập vào tài nguyên Premium",
-        "Học không giới hạn",
-        "Ưu tiên hỗ trợ khi gặp vấn đề về bài thi",
+        "Học không giới hạn"
       ],
     },
     {
@@ -41,7 +41,7 @@ const UpGradePage = () => {
     {
       id: "1 Year",
       description: "Lựa chọn tốt nhất cho việc ôn thi nghiêm túc",
-      price: "69.000",
+      price: "399.000",
       feature: [
         "Hưởng mọi đặc quyền của gói 3 tháng",
         "FUE AI không giới hạn",
@@ -89,21 +89,29 @@ const UpGradePage = () => {
 
       <ItemGroup className="grid grid-cols-3 w-screen justify-center p-10 gap-10">
         {plans.map((p) => (
-          <Item variant={"outline"} key={p.id}>
+          <Item variant={"outline"} key={p.id} className="flex ">
+            
             <ItemHeader className="flex flex-col items-start">
               <p className="text-lg font-bold">{p.id}</p>
               <ItemDescription>
                 <p>{p.description}</p>
               </ItemDescription>
             </ItemHeader>
-            <ItemContent>
-              <div>
+
+            <ItemContent className="flex flex-col">
+              <div className="">
                 <span className="font-[999] text-4xl">{p.price}</span>{" "}
                 <span className="text-[10px] font-semibold text-gray-300">
                   VND
                 </span>
               </div>
+              <ItemActions className="pl-10 pr-10 pt-5"><Button className="w-full py-6 rounded-3xl font-sans text-lg">Đăng kí</Button></ItemActions>
+
+                <div className="p-5 flex flex-col gap-3">
+                  {p.feature.map((f,index) => (<p key={index} className="w-full flex gap-2 items-center"><CircleCheck className="bg-green-400 rounded-4xl"/> {f}</p>))}
+                </div>
             </ItemContent>
+
           </Item>
         ))}
       </ItemGroup>
