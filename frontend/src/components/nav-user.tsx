@@ -110,7 +110,7 @@ export function NavUser({ user }: NavUserProbs) {
             <DropdownMenuSeparator />
 
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/upgrade')}>
                 <Sparkles />
                 Upgrade to Pro
               </DropdownMenuItem>
