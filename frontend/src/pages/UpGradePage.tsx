@@ -4,6 +4,7 @@ import {
   ItemActions,
   ItemContent,
   ItemDescription,
+  ItemFooter,
   ItemGroup,
   ItemHeader,
 } from "@/components/ui/item";
@@ -23,10 +24,7 @@ const UpGradePage = () => {
       description:
         "Phù hợp cho người dùng thử hoặc các bạn ôn gấp trước khi thi",
       price: "29.000",
-      feature: [
-        "Truy cập vào tài nguyên Premium",
-        "Học không giới hạn"
-      ],
+      feature: ["Truy cập vào tài nguyên Premium", "Học không giới hạn"],
     },
     {
       id: "3 Month",
@@ -72,49 +70,59 @@ const UpGradePage = () => {
             Chọn gói phù hợp để bứt phá số điểm ngay hôm nay. Truy cập không
             giới hạn ,
             <span className="flex justify-center">
-                được tích hợp 
+              được tích hợp
               <GradientText
                 colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
                 animationSpeed={3}
                 showBorder={false}
                 className="custom-class pl-1 pr-1"
               >
-                 FUE AI 
+                FUE AI
               </GradientText>
               hỗ trợ
             </span>{" "}
           </p>
         </div>
       </div>
+      <div className="flex flex-col h-full">
+        <ItemGroup className="grid grid-cols-3 w-screen justify-center p-10 gap-10">
+          {plans.map((p) => (
+            <Item variant={"outline"} key={p.id}>
+              <ItemHeader className="flex flex-col items-start">
+                <p className="text-lg font-bold">{p.id}</p>
+                <ItemDescription>
+                  <p>{p.description}</p>
+                </ItemDescription>
+              </ItemHeader>
 
-      <ItemGroup className="grid grid-cols-3 w-screen justify-center p-10 gap-10">
-        {plans.map((p) => (
-          <Item variant={"outline"} key={p.id} className="flex ">
-            
-            <ItemHeader className="flex flex-col items-start">
-              <p className="text-lg font-bold">{p.id}</p>
-              <ItemDescription>
-                <p>{p.description}</p>
-              </ItemDescription>
-            </ItemHeader>
-
-            <ItemContent className="flex flex-col">
-              <div className="">
-                <span className="font-[999] text-4xl">{p.price}</span>{" "}
-                <span className="text-[10px] font-semibold text-gray-300">
-                  VND
-                </span>
-              </div>
-              <ItemActions className="pl-10 pr-10 pt-5"><Button className="w-full py-6 rounded-3xl font-sans text-lg">Đăng kí</Button></ItemActions>
+              <ItemContent className="">
+                <div className="">
+                  <span className="font-[999] text-4xl">{p.price}</span>{" "}
+                  <span className="text-[10px] font-semibold text-gray-300">
+                    VND
+                  </span>
+                </div>
 
                 <div className="p-5 flex flex-col gap-3">
-                  {p.feature.map((f,index) => (<p key={index} className="w-full flex gap-2 items-center"><CircleCheck className="bg-green-400 rounded-4xl"/> {f}</p>))}
+                  {p.feature.map((f, index) => (
+                    <p key={index} className="w-full flex gap-2 items-center">
+                      <CircleCheck className="bg-green-400 rounded-4xl" /> {f}
+                    </p>
+                  ))}
                 </div>
-            </ItemContent>
+              </ItemContent>
 
-          </Item>
-        ))}
-      </ItemGroup>
+              <ItemFooter>
+                <ItemActions className="pl-10 pr-10 pt-5 w-full">
+                  <Button className="w-full py-6 rounded-3xl font-sans text-lg">
+                    Đăng kí
+                  </Button>
+                </ItemActions>
+              </ItemFooter>
+            </Item>
+          ))}
+        </ItemGroup>
+      </div>
     </div>
   );
 };

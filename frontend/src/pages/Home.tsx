@@ -12,7 +12,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
-
+import NoSelected from '@/assets/Gemini_Generated_Image_rl5wzhrl5wzhrl5w.png'
 import HomePage from "./HomePage";
 
 const Home = () => {
@@ -78,8 +78,8 @@ const Home = () => {
 
       <Empty className="from-muted/50 to-background h-full bg-gradient-to-b from-30%">
       <EmptyHeader>
-        <EmptyMedia variant="icon">
-          {/* <IconBell /> */}
+        <EmptyMedia variant="default">
+          <img src={NoSelected}/>
         </EmptyMedia>
         <EmptyTitle>Chưa mục nào được chọn</EmptyTitle>
         <EmptyDescription>
