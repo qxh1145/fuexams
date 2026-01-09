@@ -39,12 +39,12 @@ function App() {
             <Route path="/se" element={<SeSubject />} />
             <Route path="/test/do-test/:slug" element={<TakingTest />} />
             <Route path="/my-exams" element={<MyExams />} />
-            <Route path="/create-exams" element={<CreateExams />} />
-            <Route path="/upgrade" element= {<UpGradePage/>}/>
+            <Route path="/upgrade" element={<UpGradePage />} />
 
             {/*Premium only*/}
             <Route element={<PrivateRoles allowedRoles={[ROLES.ADMIN, ROLES.PREMIUM]} />}>
               <Route path="/subjects-src" element={<Comingsoon />} />
+              <Route path="/create-exams" element={<CreateExams />} />
 
             </Route>
           </Route>
