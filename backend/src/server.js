@@ -5,6 +5,8 @@ import { connectDB } from './config/db.js';
 import authRoute from './route/authRoute.js'; 
 import userRoute from './route/userRoute.js';
 import examRoute from './route/examsRoute.js';
+import orderRouter from './route/orderRoute.js';
+
 import cookieParser from 'cookie-parser'
 import { protectedRoute } from './middleware/authMiddleware.js';
 dotenv.config();
@@ -21,6 +23,7 @@ app.use(cors());
 //public route
 app.use('/auth', authRoute)
 app.use('/exams', examRoute)
+app.use('/payment', orderRouter)
 //private route
 app.use(protectedRoute)
 app.use('/users', userRoute)
