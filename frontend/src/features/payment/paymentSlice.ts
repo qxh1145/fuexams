@@ -1,0 +1,5 @@
+
+interface PaymentInput {
+    plantId: String,
+    
+}

@@ -1,5 +1,9 @@
-import PayOS from "@payos/node";
+import {PayOS} from "@payos/node";
 import Order from "../model/Order.js";
+import dotenv from 'dotenv'
+import User from "../model/Users.js";   // Nhớ import Model User
+
+dotenv.config() //truy cap bien moi truong phai confug dotenv
 
 //khoi tao cac key can thiet cau pay os
 const payos = new PayOS(
@@ -20,7 +24,7 @@ export const createPaymentLink = async (req, res) => {
     const { planId } = req.body;
     const user = req.user;
 
-    if (PLAN_PRICES[planId]) {
+    if (!PLAN_PRICES[planId]) {
       return res.status(400).json({ message: "Not a valid plant id" });
     }
     //tao ma don hang
@@ -37,19 +41,21 @@ export const createPaymentLink = async (req, res) => {
       orderCode: orderCode,
       amount: PLAN_PRICES[planId],
       description: `Upgrade ${planId}`,
-      cancelUrl: `${frontendBaseUrl}/upgrade`,
+      cancelUrl: `${frontendBaseUrl}/cancel`,
       returnUrl: `${frontendBaseUrl}/upgrade/success`,
     };
+    console.log('test: ', body)
     //goi payos lay link
-    const paymentLinkResponse = await payos.createPaymentLink(body);
+    const paymentLinkResponse = await payos.paymentRequests.create(body); 
 
     console.log(paymentLinkResponse);
 
+    const amountPrice = PLAN_PRICES[planId]
     const newOrder = new Order({
       userId: user._id,
       planId: planId,
       orderCode: orderCode,
-      amount: PLAN_PRICES[amount],
+      amount: amountPrice,
       status: "Pending",
       paymentDate: new Date(),
     });
@@ -60,6 +66,18 @@ export const createPaymentLink = async (req, res) => {
       checkoutUrl: paymentLinkResponse.checkoutUrl,
     });
   } catch (error) {
+    console.log(error)
     return res.status(400).json({message: 'Error while process payment: ', error});
   }
+};
+
+
+export const handlePayOSOrder = async (req, res) => {
+    console.log('PayOs Webhook recived: ', req.boy)
+
+    const {success, data} = req.body
+
+    if(!data || !data.orderCode) {
+      return res.status(400).json({success: false})
+    }
 };
