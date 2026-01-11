@@ -1,5 +1,5 @@
 import PayOS from "@payos/node";
-import Order from "../model/Order";
+import Order from "../model/Order.js";
 
 //khoi tao cac key can thiet cau pay os
 const payos = new PayOS(
