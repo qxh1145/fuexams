@@ -2,6 +2,7 @@ import {
     createSlice,
     createAsyncThunk,
     type PayloadAction,
+    isRejectedWithValue,
 } from "@reduxjs/toolkit";
 import axiosClient from "@/service/axiosClient";
 //Note
@@ -53,7 +54,7 @@ interface SigupResponse {
 //khoi tao state
 const initialState: AuthState = {
     currentUser: JSON.parse(localStorage.getItem("user") || "null"),
-    accessToken: localStorage.getItem("accessToken"),
+    accessToken: localStorage.getItem("accessToken") || null,
     isLoading: false,
     error: null,
     message: null,
@@ -85,6 +86,24 @@ export const signupUser = createAsyncThunk<
 
     return response; // tra ve SignupRespone
 });
+
+
+// export const fetchUserProfile = createAsyncThunk<User, void, { rejectValue: string }>(
+//     "auth/fetchUserProfile", 
+//     async (_, { rejectWithValue }) => {
+
+export const fetchUserProfile = createAsyncThunk<User, void, { rejectValue: string }>('auth/fetchUserProfile', async (_, { rejectWithValue }) => {
+    try {
+        const response = await axiosClient.get('users/me')
+        // Check if response is valid user object (avoid Ngrok HTML warning or other garbage)
+        if (!response || typeof response !== 'object' || !response.id || !response.role) {
+             return rejectWithValue("Invalid user data received from server");
+        }
+        return response;
+    } catch (error : any) {
+        return rejectWithValue(error.response?.data?.message || "Cannnot fetch user")
+    }
+})
 
 const authSlice = createSlice({
     name: "auth",
@@ -130,7 +149,12 @@ const authSlice = createSlice({
             .addCase(signupUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload || "Error while sign up new user";
-            });
+            })
+            .addCase(fetchUserProfile.fulfilled, (state, action: PayloadAction<User>) => {
+                state.currentUser = action.payload;
+                state.isLoading = false;
+                localStorage.setItem('user', JSON.stringify(action.payload));
+            })
     },
 });
 

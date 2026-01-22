@@ -13,10 +13,32 @@ import { ArrowLeft, CircleCheck, Sparkles, X } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import GradientText from "@/components/GradientText";
+import { getPayment } from "@/features/payment/paymentSlice";
+import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 const UpGradePage = () => {
   const navigate = useNavigate();
-  const { currentUser } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null)
+
+
+
+
+  const handleProcessPayment = async (planId: string, amount: number) => {
+    try {
+      setLoadingPlanId(planId)
+      const actionResult = await dispatch(getPayment({planId, amount})).unwrap()
+
+      if(actionResult){
+        window.location.href = String(actionResult.checkoutUrl)
+      }
+      setLoadingPlanId(null)
+    } catch (error) {
+      console.log("Error: ", error)
+    }
+  }
 
   const plans = [
     {
@@ -24,7 +46,8 @@ const UpGradePage = () => {
       description:
         "Phù hợp cho người dùng thử hoặc các bạn ôn gấp trước khi thi",
       price: "29.000",
-      feature: ["Truy cập vào tài nguyên Premium", "Học không giới hạn"],
+      feature: ["Truy cập vào tài nguyên Premium", "Học không giới hạn", "Tối đa hóa trải nghiệm  "],
+      amount: 29000
     },
     {
       id: "3 Month",
@@ -35,6 +58,7 @@ const UpGradePage = () => {
         "A.I hỗ trợ tạo đề thi có giới hạn",
         "Truy cập vào một số tool tiện ích",
       ],
+      amount: 69000
     },
     {
       id: "1 Year",
@@ -45,8 +69,11 @@ const UpGradePage = () => {
         "FUE AI không giới hạn",
         "Truy cập vào toàn bộ tool tiện ích",
       ],
+      amount: 399000
     },
   ];
+
+
 
   return (
     <div>
@@ -114,8 +141,8 @@ const UpGradePage = () => {
 
               <ItemFooter>
                 <ItemActions className="pl-10 pr-10 pt-5 w-full">
-                  <Button className="w-full py-6 rounded-3xl font-sans text-lg">
-                    Đăng kí
+                  <Button className="w-full py-6 rounded-3xl font-sans text-lg" disabled={loadingPlanId !== null} onClick={() => handleProcessPayment(p.id, p.amount)}>
+                    {loadingPlanId ? <Spinner/> : 'Đăng kí'}
                   </Button>
                 </ItemActions>
               </ItemFooter>

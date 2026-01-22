@@ -16,6 +16,7 @@ import { ROLES } from "./constants/roles";
 import CreateExams from "./pages/CreateExams";
 import MyExams from "./pages/MyExams";
 import UpGradePage from "./pages/UpGradePage";
+import FueAi from "./pages/FueAi";
 function App() {
   return (
     <>
@@ -45,6 +46,7 @@ function App() {
             <Route element={<PrivateRoles allowedRoles={[ROLES.ADMIN, ROLES.PREMIUM]} />}>
               <Route path="/subjects-src" element={<Comingsoon />} />
               <Route path="/create-exams" element={<CreateExams />} />
+              <Route path="/fue-ai" element={<FueAi />} />
 
             </Route>
           </Route>

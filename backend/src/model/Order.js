@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-
+import mongoose, { Model } from "mongoose";
+import { PAYMENT_STATUS } from "../constants/Roles.js";
 const orderSchema = new mongoose.Schema(
   {
     userId: {
@@ -22,7 +22,8 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Pending", "Paid", "Cancelled", "Failed"],
+      // enum: ["Pending", "Paid", "Cancelled", "Failed"],
+      enum: Object.values[PAYMENT_STATUS]
     },
     paymentDate: {
       type: Date,

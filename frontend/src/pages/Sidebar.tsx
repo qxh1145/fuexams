@@ -31,7 +31,6 @@ interface IAll {
 
 export default function Sidebar({ children }: SidebarLayoutProps) {
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState("")
   const navigate = useNavigate();
   return (
     <SidebarProvider

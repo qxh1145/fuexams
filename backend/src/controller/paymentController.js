@@ -2,6 +2,7 @@ import {PayOS} from "@payos/node";
 import Order from "../model/Order.js";
 import dotenv from 'dotenv'
 import User from "../model/Users.js";   // Nhớ import Model User
+import { ROLES } from "../constants/Roles.js";
 
 dotenv.config() //truy cap bien moi truong phai confug dotenv
 
@@ -42,7 +43,7 @@ export const createPaymentLink = async (req, res) => {
       amount: PLAN_PRICES[planId],
       description: `Upgrade ${planId}`,
       cancelUrl: `${frontendBaseUrl}/cancel`,
-      returnUrl: `${frontendBaseUrl}/upgrade/success`,
+      returnUrl: `${frontendBaseUrl}/home`,
     };
     console.log('test: ', body)
     //goi payos lay link
@@ -73,11 +74,44 @@ export const createPaymentLink = async (req, res) => {
 
 
 export const handlePayOSOrder = async (req, res) => {
-    console.log('PayOs Webhook recived: ', req.boy)
+    console.log('PayOs Webhook recived: ', req.body)
 
     const {success, data} = req.body
 
     if(!data || !data.orderCode) {
       return res.status(400).json({success: false})
     }
+    //tim don hang dua tren order code (PayOS gui ve)
+    const order = await Order.findOne({orderCode:data.orderCode})
+
+    if(!order){
+      console.log('Can not find order, please try again.')
+      return res.json({success: false})
+    }
+    //kiem tra don hang da xu ly roi, neu co thi bo qua
+
+    if(data.status === 'Paid'){
+      console.log("Already paid....")
+      return res.json({success: true})
+    }
+
+    //cap nhat database
+
+    try {
+      order.status = 'Paid'
+      await order.save()
+
+      await User.findByIdAndUpdate(order.userId, {
+        role: ROLES.PREMIUM,
+        plan: order.planId,
+        plantStartDate: new Date()
+      })
+      console.log("Update success");
+    } catch (error) {
+      console.error("Update failed...")
+    }
+
+    //luon tra ve success true de PayOS khong goi lai nuwa
+
+    return res.json({success: true})
 };

@@ -27,21 +27,6 @@ const Home = () => {
 
   console.log('hello', folder)
 
-
-  const filteredFolder = (filter: String) => {
-    switch (filter) {
-      case 'Major': {
-        return folder.filter(f => f.type === 'Major')
-      }
-      case 'Semester': return folder.filter(f => f.type === 'Semester')
-      case 'Term': return folder.filter(f => f.type === 'Term')
-      case 'Subject': return folder.filter(f => f.type === 'Subject')
-      default: {
-        return folder
-      }
-    }
-  }
-
   return (
 
     <Sidebar >

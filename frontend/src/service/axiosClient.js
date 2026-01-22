@@ -4,6 +4,7 @@ const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
     "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": "true",
   },
   timeout: 10000,
 });
@@ -13,7 +14,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   (config) => {
     //lay token tu local storage
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("accessToken");
 
     if (token) {
       //gan token vao header Authorization
@@ -26,15 +27,17 @@ axiosClient.interceptors.request.use(
   }
 );
 
+
 //loc truoc khi nhan ket qua
 const handleLogout = async () => {
   try {
     await axiosClient.post("auth/signout");
   } catch (error) {
-    console.error("Error in handleLogout fuc");
+    console.error("Error in handleLogout fuc", error);
   } finally {
     localStorage.removeItem("accessToken");
-    window.location.href("/auth/signin");
+    localStorage.removeItem("user");
+    window.location.href = "/auth/signin";
   }
 };
 
@@ -42,13 +45,17 @@ axiosClient.interceptors.response.use(
   (response) => {
     return response.data;
   },
-  (error) => {
+  async (error) => {
+    
     const status = error.response?.status;
-    const data = error.response?.data;
+    // const data = error.response?.data;
 
     switch (status) {
       // het han token / chua dang nhap
-     
+      case 401: {
+        await handleLogout();
+        break;
+      }
       //khong co quyen truy cap
       case 403: {
         console.warn("you dont have permission to access this");

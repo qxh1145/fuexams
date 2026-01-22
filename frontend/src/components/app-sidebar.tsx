@@ -39,7 +39,8 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 
 import { getFolder } from "@/features/exams/examSlice";
 import { FilterMajor } from "@/lib/data";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
+import { fetchUserProfile } from '@/features/auth/authSlice';
 
 // This is sample data
 
@@ -63,9 +64,38 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
 
   React.useEffect(() => {
     dispatch(getFolder())
+    // dispatch(fetchUserProfile())
   }, [dispatch])
 
-  console.log('hello', folder)
+  const [searchParams] = useSearchParams();
+
+  const isSuccess = searchParams.get("code") === "00"
+  const orderCode = searchParams.get("orderCode")
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      dispatch(fetchUserProfile())
+    }
+  }, [isSuccess, orderCode])
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      const token = localStorage.getItem("accessToken");
+      console.log("🔍 KIỂM TRA LÚC VỀ TỪ PAYOS:");
+      console.log("- Current URL:", window.location.href);
+      console.log("- Token trong Storage:", token ? "Vẫn còn" : "MẤT TIÊU RỒI!");
+      
+      if (!token) {
+        alert("Chết cha! Token bị mất rồi nên mới bị Logout!");
+      }
+    }
+  }, [isSuccess]);
+
+
+
+
+
+  console.log('hello', currentUser)
 
 
   const filteredFolder = (filter: String) => {
@@ -81,6 +111,9 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
       }
     }
   }
+
+
+
 
   return (
     <Sidebar
@@ -103,7 +136,7 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight" onClick={() => navigate("/home")}>
                   <span className="truncate font-medium">FUExams</span>
-                  <span className="truncate text-xs">{(currentUser?.role)?.toUpperCase()}</span>  
+                  <span className="truncate text-xs">{(currentUser?.role)?.toUpperCase()}</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -132,7 +165,7 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
 
               {/*CHuyển file txt, quizlet document thành flash card  */}
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="AI">
+                <SidebarMenuButton tooltip="AI" onClick={() => navigate("/fue-ai")}>
                   <Sparkles />
                   <GradientText
                     colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}

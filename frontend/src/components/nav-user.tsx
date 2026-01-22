@@ -7,6 +7,7 @@ import {
   CreditCard,
   Folder,
   LogOut,
+  Search,
   Sparkles,
 } from "lucide-react";
 
@@ -26,11 +27,12 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useNavigate } from "react-router";
-import { logout } from "@/features/auth/authSlice";
+import { useNavigate, useSearchParams } from "react-router";
+import { fetchUserProfile, logout } from "@/features/auth/authSlice";
 import { ROLES } from "@/constants/roles";
 import GradientText from "./GradientText";
 import { Badge } from "./ui/badge";
+import { useEffect } from "react";
 
 interface UserProbs {
   username: string;
@@ -41,11 +43,14 @@ interface NavUserProbs {
   user: UserProbs | null
 }
 
+
 export function NavUser({ user }: NavUserProbs) {
   const { isMobile } = useSidebar();
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  
+
   const handleLogout = () => {
     dispatch(logout());
     navigate("/signin");
