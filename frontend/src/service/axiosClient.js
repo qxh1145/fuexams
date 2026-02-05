@@ -6,7 +6,7 @@ const axiosClient = axios.create({
     "Content-Type": "application/json",
     "ngrok-skip-browser-warning": "true",
   },
-  timeout: 10000,
+  timeout: 9999,
 });
 
 //loc truoc khi gui di

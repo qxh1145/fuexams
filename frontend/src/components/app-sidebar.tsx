@@ -11,6 +11,7 @@ import {
   HandFist,
   Inbox,
   Send,
+  Shield,
   Sparkles,
   Trash2,
 } from "lucide-react";
@@ -41,6 +42,7 @@ import { getFolder } from "@/features/exams/examSlice";
 import { FilterMajor } from "@/lib/data";
 import { useNavigate, useSearchParams } from "react-router";
 import { fetchUserProfile } from '@/features/auth/authSlice';
+import { ROLES } from '@/constants/roles';
 
 // This is sample data
 
@@ -84,7 +86,7 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
       console.log("🔍 KIỂM TRA LÚC VỀ TỪ PAYOS:");
       console.log("- Current URL:", window.location.href);
       console.log("- Token trong Storage:", token ? "Vẫn còn" : "MẤT TIÊU RỒI!");
-      
+
       if (!token) {
         alert("Chết cha! Token bị mất rồi nên mới bị Logout!");
       }
@@ -188,6 +190,13 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
                   <BookDown /> Tải đề từ FUO
                 </SidebarMenuButton>
               </SidebarMenuItem>
+
+              {currentUser?.role === "admin" && 
+              <SidebarMenuItem >
+                <SidebarMenuButton onClick={() => navigate("/admin-dashboard")} tooltip={"Admin Dashboard"}>
+                  <Shield /> Admin Dashboard
+                </SidebarMenuButton>
+              </SidebarMenuItem>}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

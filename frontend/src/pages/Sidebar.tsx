@@ -21,6 +21,7 @@ import { useNavigate } from "react-router";
 //Dinh nghia props 
 interface SidebarLayoutProps {
   children?: React.ReactNode;
+  sidebar?: React.ReactNode;
 }
 interface IAll {
   exams: IExam[] | null;
@@ -29,9 +30,10 @@ interface IAll {
 
 
 
-export default function Sidebar({ children }: SidebarLayoutProps) {
+export default function Sidebar({ children, sidebar }: SidebarLayoutProps) {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate();
+  const sidebarComponent = sidebar || <AppSidebar/>
   return (
     <SidebarProvider
       style={
@@ -40,7 +42,7 @@ export default function Sidebar({ children }: SidebarLayoutProps) {
         } as React.CSSProperties
       }
     >
-      <AppSidebar />
+      {sidebarComponent}
       <SidebarInset className="from-muted/50 to-background h-full bg-gradient-to-b from-30%" >
         <header className="bg-background sticky top-0 flex shrink-0 items-center border-b p-4  ">
           <div className="grid grid-cols-3 w-full">

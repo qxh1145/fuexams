@@ -3,7 +3,7 @@ const checkRoles = (allowedRoles) => {
         if(!req.user) {
             return res.status(401).json({message: "You are not login yet"})
         }
-        const userRole = res.user.role
+        const userRole = req.user.role
 
         if(allowedRoles.includes(userRole)){
             next();
