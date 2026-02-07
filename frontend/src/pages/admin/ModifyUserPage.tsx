@@ -39,6 +39,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { deleteUser, getAllUser, updateUser, type Users } from "@/features/users/userSlice.ts"
 import { AlertDialogButton } from "@/components/alert-dialog-button";
 import axiosClient from "@/service/axiosClient";
+import EditUserDialog from "./EditUserDialog";
 
 
 
@@ -57,36 +58,12 @@ const ActionCell = ({ row }: { row: any }) => {
     console.log("id: ", id)
 
   }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => (
-      {
-        ...prev,
-        [name]: value
-      }
-    ))
-  }
-
-
-  const handleUpdateUser = async () => {
-
-    const payload = {
-      id, ...formData
-    }
-
-    try {
-      const response = axiosClient.put(`users/update-user/${id}`, payload);
-      return response;
-    } catch (error) {
-      console.log("Error while fetching data: ", error)
-    }
-  }
   return (
     <div className="flex gap-2">
       {/* // <Button variant="destructive" onClick={handleDeleteUser}>Delete</Button> */}
       <AlertDialogButton userId={id} handleDeleteUser={handleDeleteUser} />
-      <Button onClick={() => handleUpdateUser}>Update Infomation</Button>
+      {/* <Button onClick={() => handleUpdateUser}>Update Infomation</Button> */}
+      <EditUserDialog user={row.original}></EditUserDialog>
     </div>
   )
 }

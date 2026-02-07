@@ -46,7 +46,7 @@ export const deleteUser = createAsyncThunk<string, string, { rejectValue: string
 export const updateUser = createAsyncThunk<Users, Users, { rejectValue: string }>("admin/modifyUser", async (userData, thunkAPI) => {
     try {
         const{id, ...dataToSent} = userData;
-        const response = await axiosClient.put(`users/update-use/${id}`, dataToSent);
+        const response = await axiosClient.put(`users/update-user/${id}`, dataToSent);
         return response
     } catch (error : any) {
         return thunkAPI.rejectWithValue(error.response?.data?.message || "Error")
