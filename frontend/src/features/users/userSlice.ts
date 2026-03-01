@@ -20,7 +20,7 @@ const initialState: UserState = {
     error: null
 }
 
-export const getAllUser = createAsyncThunk<any, void, { rejectValue: string }>("admin/getAllUsers",
+export const getAllUser = createAsyncThunk<Users[], void, { rejectValue: string }>("admin/getAllUsers",
     async (_, thunkAPI) => {
         try {
             const response = await axiosClient.get("users/all-user");

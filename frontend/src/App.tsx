@@ -24,6 +24,7 @@ import { NotFound } from "./pages/error/NotFound";
 import { Comingsoon } from "./pages/error/Comingsoon";
 import { ROLES } from "./constants/roles";
 import ModifyUserPage from "./pages/admin/ModifyUserPage";
+import TransactionTable from "./pages/admin/TransactionTable";
 
 function App() {
   return (
@@ -68,6 +69,8 @@ function App() {
             {/* 👇 SỬA TẠI ĐÂY: Tách UserList và ModifyUser ra làm 2 route riêng biệt ngang hàng */}
             <Route path="/admin-dashboard/user-list" element={<UserList />} />
             <Route path="/admin-dashboard/modify-user" element={<ModifyUserPage />} />
+
+            <Route path="/admin-dashboard/transaction/orders-list" element={<TransactionTable />}/>
             
             {/* Nếu modify user cần ID (ví dụ: /modify-user/123), hãy dùng dòng dưới: */}
             {/* <Route path="/admin-dashboard/modify-user/:id" element={<ModifyUserPage />} /> */}

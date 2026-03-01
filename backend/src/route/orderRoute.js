@@ -1,10 +1,13 @@
-import { createPaymentLink, handlePayOSOrder } from "../controller/paymentController.js";
+import { createPaymentLink, getAllOrders, handlePayOSOrder } from "../controller/paymentController.js";
 import express from 'express'
 import { protectedRoute } from "../middleware/authMiddleware.js";
+import checkRoles from "../middleware/checkPermission.js";
+import { ROLES } from "../constants/Roles.js";
 
 const router = express.Router();
 
 router.post('/create-order',protectedRoute, createPaymentLink);
 router.post('/receive-hook', handlePayOSOrder); 
+router.get('/get-all-orders',protectedRoute,checkRoles(ROLES.ADMIN), getAllOrders)
 
 export default router

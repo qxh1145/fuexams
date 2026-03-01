@@ -20,7 +20,7 @@ import { useNavigate } from "react-router";
 
 //Dinh nghia props 
 interface SidebarLayoutProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode | any;
   sidebar?: React.ReactNode;
 }
 interface IAll {
@@ -44,7 +44,7 @@ export default function Sidebar({ children, sidebar }: SidebarLayoutProps) {
     >
       {sidebarComponent}
       <SidebarInset className="from-muted/50 to-background h-full bg-gradient-to-b from-30%" >
-        <header className="bg-background sticky top-0 flex shrink-0 items-center border-b p-4  ">
+        <header className="bg-background sticky top-0 flex shrink-0 items-center border-b p-4 z-10 ">
           <div className="grid grid-cols-3 w-full">
             <SidebarTrigger size="icon-lg" className="-ml-1" />
             {/* <Input className="" /> */}

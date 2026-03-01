@@ -103,7 +103,29 @@ export const AdminSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
+        <SidebarGroup>
+          <SidebarGroupLabel>Transactions</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={() => navigate("/admin-dashboard/transaction/orders-list")}>
+                  Order Logs
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={() => navigate("/admin-dasboard/transaction/income")}>
+                  Income Statistics
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
       </SidebarContent>
+
+      <SidebarFooter>
+        <NavUser user={currentUser}></NavUser>
+      </SidebarFooter>
     </Sidebar>
 
 
