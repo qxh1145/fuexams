@@ -8,7 +8,9 @@ interface TransactionState {
     isLoading: boolean,
     isError: string | null
 }
-
+export interface DeleteInput {
+    orderCode: number
+}
 const initialState: TransactionState = {
     transaction: [],
     isLoading: true,
@@ -25,6 +27,17 @@ export const getAllTransactions = createAsyncThunk<Payment[], void, { rejectValu
             return thunkAPI.rejectWithValue(error.response?.data?.message || "sjjdns");
         }
 })
+
+export const deleteTransaction = createAsyncThunk<string , DeleteInput, {rejectValue: string}>("admin/delete-transaction", 
+    async (payload, thunkAPI) => {
+        try {
+            const response = await axiosClient.delete("/payment/delete-transaction",{data: payload});
+            return response
+        } catch (error:any) {
+            return thunkAPI.rejectWithValue(error.response?.data?.message || "error")
+        }
+    }
+)
 
 const transactionSlice = createSlice({
     name: "transactionSlice",
@@ -47,7 +60,15 @@ const transactionSlice = createSlice({
             state.isLoading = true;
             state.isError = null;
         })
+        builder.addCase(deleteTransaction.fulfilled, (state, action) => {
+            const deletedOrderCode = action.meta.arg.orderCode;
+            state.transaction = state.transaction.filter(
+                (transaction) => transaction.orderCode != deletedOrderCode
+            )
+        })
     }
 })
+
+
 
 export default transactionSlice.reducer;

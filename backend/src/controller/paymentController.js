@@ -115,6 +115,9 @@ export const handlePayOSOrder = async (req, res) => {
 
     return res.json({success: true})
 };
+
+
+// Payment crud
 export const getAllOrders = async (req,res) => {
   try {
     const orders = await Order.find()
@@ -123,5 +126,37 @@ export const getAllOrders = async (req,res) => {
   } catch (error) {
     console.log("Error while fetch all orders ", error);
     return res.status(500).json({message: "Error while fetch all orders"})
+  }
+}
+
+export const deleteOrder = async (req, res) => {
+  try {
+    const {orderCode} = req.body;
+    const response = await Order.findOneAndDelete({"orderCode": orderCode});
+    if(!response){
+      return res.status(404).json({message: "Cannot find orderCode to delete"})
+    }
+    console.log("Deleted ", orderCode);
+    return res.status(200).json({message: "Delete success"})
+  }catch (error){
+    return res.status(500).json({message: "Unexpected token"})
+  }
+}
+export const updateUser = async (req, res) => {
+  try {
+    const { newStatus } = req.body;
+    const response = await Order.findByIdAndUpdate(
+      req.params.orderCode,
+      {$set: {status: newStatus} },
+      {new: true}
+    )
+
+    if(!response){
+      return res.status(404).json({message: "cannot find transaction"})
+    }
+    console.log('update success')
+    return res.status(200).json({message: "update success"})
+  } catch (error) {
+    return res.status(500).json({message: "error", error})
   }
 }

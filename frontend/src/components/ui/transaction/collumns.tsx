@@ -3,8 +3,12 @@
 import type { PaymentStatus } from "@/constants/roles";
 import type { ColumnDef } from "@tanstack/react-table"
 import { Button } from "../button";
-import { Delete, EditIcon } from "lucide-react";
+import { Delete, EditIcon, Trash2 } from "lucide-react";
 import { ButtonGroup } from "../button-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+import { toast } from "sonner";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { deleteTransaction, type DeleteInput } from "@/features/payment/transactionSlice";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -21,6 +25,50 @@ export type Payment = {
   status: PaymentStatus;
   paymentDate: string;
 }
+
+const ActionCell = ({ row }: { row: any }) => {
+  const dispatch = useAppDispatch();
+
+  const handleDeleteTransaction = async (orderCode: number) => {
+    try {
+      const result = await dispatch(deleteTransaction({ orderCode })).unwrap();
+      if (result) {
+        toast.success( "Delete success"); 
+      }
+    } catch (error: any) {
+      toast.error("Delete failed");
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center">
+      <ButtonGroup className="flex gap-2">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={() => handleDeleteTransaction(row.original.orderCode)}
+              className="hover:-translate-y-1"
+              size={"icon-sm"}
+              variant={"ghost"}
+            >
+              <Trash2 color="red" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent><p>Delete this row</p></TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button className="hover:-translate-y-1" size={"icon-sm"} variant={"ghost"}>
+              <EditIcon color="blue" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent><p>Edit this row</p></TooltipContent>
+        </Tooltip>
+      </ButtonGroup>
+    </div>
+  );
+};
 
 export const columns: ColumnDef<Payment>[] = [
   {
@@ -77,16 +125,8 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     header: "Tool",
-    cell: ({ row }) => {
-      return (
-        <div className="">
-          <ButtonGroup className="flex justify-right">
-            <Button size={"icon-sm"} variant={"ghost"}><Delete /></Button>
-            <Button size={"icon-sm"} variant={"ghost"}><EditIcon /></Button>
-          </ButtonGroup>
-
-        </div>
-      )
-    }
+    cell: ({ row }) => 
+      <ActionCell row={row} />
+    
   }
 ]

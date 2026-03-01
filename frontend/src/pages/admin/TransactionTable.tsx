@@ -5,10 +5,12 @@ import React, { useEffect } from 'react'
 import Sidebar from '../Sidebar'
 import SidebarLayout from "@/pages/Sidebar";
 import { AdminSidebar } from '@/components/admin-sidebar'
-import { getAllTransactions } from '@/features/payment/transactionSlice'
+import { deleteTransaction, getAllTransactions, type DeleteInput } from '@/features/payment/transactionSlice'
+import { toast } from 'sonner'
 
 
 const TransactionTable = () => {
+
   const dispactch = useAppDispatch();
 
   const { transaction } = useAppSelector((state) => state.transaction)
@@ -18,6 +20,7 @@ const TransactionTable = () => {
   }, [dispactch])
 
   console.log(transaction)
+
   return (
 
     <SidebarLayout sidebar={<AdminSidebar />}>
