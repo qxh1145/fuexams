@@ -8,7 +8,9 @@ const PAYMENT_STATUS = {
     PAID: 'Paid',
     PENDING: 'Pending',
     CANCELLED: 'Cancelled',
-    FAILED: 'Failed'
+    FAILED: 'Failed',
+    REFUND: 'Refund'
+
 }
 
 module.exports = {ROLES, PAYMENT_STATUS}

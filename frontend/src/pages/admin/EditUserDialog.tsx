@@ -6,6 +6,7 @@ import { Select, SelectTrigger, SelectValue, SelectItem, SelectContent, SelectGr
 import { ROLES } from '@/constants/roles';
 import { getAllUser, updateUser } from '@/features/users/userSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux'
+import { Edit, Edit2 } from 'lucide-react';
 import React, { useState } from 'react'
 import { toast } from 'sonner';
 
@@ -45,7 +46,7 @@ const EditUserDialog = ({ user }: { user: any }) => {
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild >
-                <Button>Edit</Button>
+                <Button className='hover:cursor-pointer' variant={'ghost'} size={'icon-sm'}><Edit color='blue'/></Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

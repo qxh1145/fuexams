@@ -26,7 +26,7 @@ const dispatch = useAppDispatch()
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button variant="destructive" onClick={() => handleDeleteUser(userId)}>Delete User</Button>
+                <Button className="hover:cursor-pointer" size={"icon-sm"} variant="ghost" onClick={() => handleDeleteUser(userId)}><Trash2Icon color="red"/></Button>
             </AlertDialogTrigger>
             <AlertDialogContent size="sm">
                 <AlertDialogHeader>

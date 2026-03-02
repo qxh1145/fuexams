@@ -142,7 +142,7 @@ export const deleteOrder = async (req, res) => {
     return res.status(500).json({message: "Unexpected token"})
   }
 }
-export const updateUser = async (req, res) => {
+export const updateOrder = async (req, res) => {
   try {
     const { newStatus } = req.body;
     const response = await Order.findByIdAndUpdate(

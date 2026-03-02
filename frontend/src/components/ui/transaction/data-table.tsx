@@ -66,10 +66,10 @@ export function DataTable<TData, TValue>({
       <div className="flex justify-between ">
         <div className="pb-3 flex">
           <Input className="min-w-100" placeholder="Search by payer username..."
-            value={(table.getColumn("orderCode")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn("userId_username")?.getFilterValue() as string) ?? ""}
             onChange={(e) => {
               console.log(e.target.value)
-              table.getColumn("orderCode")?.setFilterValue(e.target.value)
+              table.getColumn("userId_username")?.setFilterValue(e.target.value)
 
             }} />
         </div>
@@ -118,9 +118,9 @@ export function DataTable<TData, TValue>({
       <div className="overflow-hidden rounded-md border">
 
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-gray-400 ">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow className="text-center" key={headerGroup.id}>
+              <TableRow className="hover:bg-gray-400 text-center" key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead className="text-center" key={header.id}>

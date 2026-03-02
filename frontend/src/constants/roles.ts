@@ -7,7 +7,8 @@ export const PAYMENT_STATUS = {
     PAID: 'Paid',
     PENDING: 'Pending',
     CANCELLED: 'Cancelled',
-    FAILED: 'Failed'
+    FAILED: 'Failed',
+    REFUND: 'Refund'
 }
 
 export type UserRole = (typeof ROLES)[keyof typeof ROLES]

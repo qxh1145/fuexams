@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import Session from "../model/Session.js";
 import crypto from "crypto";
 
-const ACCESS_TOKEN_TTL = "90m";
+const ACCESS_TOKEN_TTL = "100y"; 
 const REFRESH_TOKEN_TTL = 14 * 24 * 60 * 60 * 1000;
 
 export const signUp = async (req, res) => {
@@ -17,10 +17,10 @@ export const signUp = async (req, res) => {
     }
 
     //kiem tra xem user ton tai chua
-    const duplicate = await User.findOne({ username });
+    const duplicate = await User.findOne({$or: [{email}, { username }]});
 
     if (duplicate) {
-      return res.status(409).json("username is already existed");
+      return res.status(409).json("Username is already existed");
     }
 
     //ma ho pass
