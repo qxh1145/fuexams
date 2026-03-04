@@ -113,7 +113,7 @@ export const AdminSidebar = () => {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => navigate("/admin-dasboard/transaction/income")}>
+                <SidebarMenuButton onClick={() => navigate("/admin-dashboard/transaction/income-chart")}>
                   Income Statistics
                 </SidebarMenuButton>
               </SidebarMenuItem>
