@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { ArrowBigLeft, Calendar, Home, HomeIcon, Inbox, Search, Settings } from "lucide-react"
 import { useNavigate } from "react-router"; // Thêm navigate nếu cần chuyển trang
 
 // 👇 QUAN TRỌNG: Import từ UI component, KHÔNG import từ trang Layout
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sidebar"
 import { NavUser } from "./nav-user";
 import { useAppSelector } from "@/hooks/useRedux";
+import { Button } from "./ui/button";
 
 const items = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
@@ -82,7 +83,9 @@ export const AdminSidebar = () => {
     <Sidebar>
       <SidebarHeader><h1 className="w-full text-center font-bold text-2xl">ADMIN PANEL</h1></SidebarHeader>
       <SidebarContent>
-
+        <SidebarGroup className="-mb-5">
+          <SidebarMenuItem className="flex justify-center items-center"><Button onClick={() => navigate("/home")} variant={"ghost"} className="hover:cursor-pointer flex items-center justify-center text-red-600"><HomeIcon/>Back to homepage</Button></SidebarMenuItem>
+        </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupLabel>User Management</SidebarGroupLabel>
           <SidebarGroupContent>

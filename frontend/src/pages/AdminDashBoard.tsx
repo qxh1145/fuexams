@@ -7,9 +7,7 @@ import AdminContent from '@/components/ui/admin-content';
 
 const AdminDashBoard = () => {
   return (
-    // ❌ SAI: <AdminSidebar />  <- Gọi trần như này là lỗi ngay vì thiếu Provider
-    
-    // ✅ ĐÚNG: Nhét nó vào prop 'sidebar' của Layout
+
     <SidebarLayout sidebar={<AdminSidebar />}>
       
       
