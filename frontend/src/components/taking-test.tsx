@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card'
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux'
 import { getExams, type IOptions } from '@/features/exams/testSlice'
 import { useParams } from 'react-router'
 import { Button } from './ui/button'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Ghost, LucideLetterText } from 'lucide-react'
 import { Progress } from "@/components/ui/progress"
 import { cn } from '@/lib/utils'
+import ResultModal from './result-modal'
 
 const TestProcess = () => {
     // 1. State lưu vị trí câu hỏi hiện tại
@@ -14,7 +15,9 @@ const TestProcess = () => {
 
     // 2. State lưu ID đáp án người dùng ĐÃ CHỌN (Quan trọng: Lưu ID, không lưu boolean)
     // Nếu null nghĩa là chưa chọn gì cả.
-    const [selectedOptionText, setSelectedOptionText] = useState<string[]>([]); // luu kieu du lieu la mang string, gia tri khoi tao la mang rong
+    // const [selectedOptionText, setSelectedOptionText] = useState<string[]>([]); // luu kieu du lieu la mang string, gia tri khoi tao la mang rong
+
+    const [userAnswers, setUserAnswers] = useState<Record<number, string[]>>({})
 
     const dispatch = useAppDispatch()
     const { slug: examSlug } = useParams<{ slug: string }>();
@@ -22,35 +25,39 @@ const TestProcess = () => {
 
     useEffect(() => { dispatch(getExams()) }, [dispatch])
 
-    // 3. Reset lựa chọn về null mỗi khi chuyển sang câu hỏi mới
-    useEffect(() => {
-        setSelectedOptionText([]);
-    }, [index]);
-
-    if (isLoading) return <div className="p-10 text-center">Đang tải dữ liệu...</div>;
-
-    const currentExam = exams.filter((e) => e.slug === examSlug);
-
-    // Safety check: Đảm bảo có dữ liệu trước khi render
-    if (!currentExam || currentExam.length === 0) {
-        return <div className="p-10 text-center text-red-500">Không tìm thấy bài thi!</div>;
-    }
-
-    const questionList = currentExam[0].questions;
+    const currentExam = exams.find((e) => e.slug === examSlug);
+    const questionList = currentExam?.questions || [];
     const totalQuestions = questionList.length;
+    
     const currentQuestion = questionList[index];
-
+    const currentSelection = userAnswers[index] || []
     const correctCount = currentQuestion.options.filter((o) => o.isCorrect === true).length
-    const showResult = selectedOptionText.length >= correctCount
+    const showResult = currentSelection.length >= correctCount
+
+    //tinh tong so cau lam dung
+    const totalCorrectAnswer = useMemo(() => {
+        let score = 0;
+        questionList.forEach((q, qIndex) => {
+            const selected = userAnswers[qIndex] || [];
+            const correctOpts = q.options.filter(o => o.isCorrect).map(o => o.text);
+
+            if (selected.length === correctOpts.length && selected.every(val => correctOpts.includes(val))) {
+                score++;
+            }
+        });
+        return score;
+    }, [userAnswers, questionList])
 
     const handleSelectOption = (optionText: string) => {
         if (showResult) return
 
-        setSelectedOptionText(prev => {
-            if (prev.includes(optionText)) {
-                return prev.filter(text => text !== optionText)
+        setUserAnswers(prev => {
+            const current = prev[index] || [];
+
+            if (current.includes(optionText)) {
+                return { ...prev, [index]: current.filter(text => text !== optionText) };
             }
-            return [...prev, optionText]
+            return { ...prev, [index]: [...current, optionText] };
         })
     }
 
@@ -66,10 +73,12 @@ const TestProcess = () => {
     }
 
 
+
+
     // 5. Hàm tính toán Class CSS cho từng nút (Dynamic Styling)
     const getOptionClass = (op: IOptions) => {
         const baseClass = "w-full h-20 whitespace-normal px-4 border-2"; // Class mặc định
-        const isSelected = selectedOptionText.includes(op.text)
+        const isSelected = currentSelection.includes(op.text)
 
         // chua chon du so luong
         if (!showResult) {
@@ -95,7 +104,11 @@ const TestProcess = () => {
     }
 
     const progressPercent = totalQuestions > 0 ? ((index + 1) / totalQuestions) * 100 : 0;
-
+    if (isLoading) return <div className="p-10 text-center">Đang tải dữ liệu...</div>;
+    // Safety check: Đảm bảo có dữ liệu trước khi render
+    if (!currentExam || currentExam.length === 0) {
+        return <div className="p-10 text-center text-red-500">Không tìm thấy bài thi!</div>;
+    }
     return (
         <div className="w-full mx-auto min-h-screen flex flex-col pt-10 px-4">
             <div className="pb-5">
@@ -103,8 +116,12 @@ const TestProcess = () => {
             </div>
             <Card className=''>
                 <CardHeader className='flex justify-between'>
-                    
-                    <p>Question: {index + 1} / {totalQuestions}</p>
+
+                    <div className='flex items-center gap-5 '>
+                        <p>Question: {index + 1} / {totalQuestions}</p>
+                        <ResultModal totalCorrectAnswer={totalCorrectAnswer}/>
+                    </div>
+
                     <div className='flex justify-between gap-15 italic'>
                         <span className='flex items-center hover:cursor-pointer select-none ' onClick={() => handleChangeQuestion(false)}>
                             <ChevronLeft /> Previous
