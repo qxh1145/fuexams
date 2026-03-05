@@ -25,14 +25,10 @@ const TestProcess = () => {
 
     useEffect(() => { dispatch(getExams()) }, [dispatch])
 
+
     const currentExam = exams.find((e) => e.slug === examSlug);
     const questionList = currentExam?.questions || [];
     const totalQuestions = questionList.length;
-    
-    const currentQuestion = questionList[index];
-    const currentSelection = userAnswers[index] || []
-    const correctCount = currentQuestion.options.filter((o) => o.isCorrect === true).length
-    const showResult = currentSelection.length >= correctCount
 
     //tinh tong so cau lam dung
     const totalCorrectAnswer = useMemo(() => {
@@ -47,6 +43,18 @@ const TestProcess = () => {
         });
         return score;
     }, [userAnswers, questionList])
+
+    if (isLoading) return <div className="p-10 text-center">Đang tải dữ liệu...</div>;
+    // Safety check: Đảm bảo có dữ liệu trước khi render
+    if (!currentExam || currentExam.length === 0) {
+        return <div className="p-10 text-center text-red-500">Không tìm thấy bài thi!</div>;
+    }
+
+
+    const currentQuestion = questionList[index];
+    const currentSelection = userAnswers[index] || []
+    const correctCount = currentQuestion.options.filter((o) => o.isCorrect === true).length
+    const showResult = currentSelection.length >= correctCount
 
     const handleSelectOption = (optionText: string) => {
         if (showResult) return
@@ -104,11 +112,7 @@ const TestProcess = () => {
     }
 
     const progressPercent = totalQuestions > 0 ? ((index + 1) / totalQuestions) * 100 : 0;
-    if (isLoading) return <div className="p-10 text-center">Đang tải dữ liệu...</div>;
-    // Safety check: Đảm bảo có dữ liệu trước khi render
-    if (!currentExam || currentExam.length === 0) {
-        return <div className="p-10 text-center text-red-500">Không tìm thấy bài thi!</div>;
-    }
+
     return (
         <div className="w-full mx-auto min-h-screen flex flex-col pt-10 px-4">
             <div className="pb-5">
@@ -119,7 +123,7 @@ const TestProcess = () => {
 
                     <div className='flex items-center gap-5 '>
                         <p>Question: {index + 1} / {totalQuestions}</p>
-                        <ResultModal totalCorrectAnswer={totalCorrectAnswer}/>
+                        <ResultModal totalCorrectAnswer={totalCorrectAnswer} />
                     </div>
 
                     <div className='flex justify-between gap-15 italic'>

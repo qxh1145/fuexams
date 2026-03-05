@@ -15,7 +15,7 @@ import {
   Sparkles,
   Trash2,
 } from "lucide-react";
-
+import logo from "@/assets/logo-fue.png"
 import GradientText from '@/components/GradientText'
 
 
@@ -131,16 +131,17 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
         {/*Logo app */}
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
-              <a href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <HandFist className="size-4" />
+            <SidebarMenuButton size="lg" asChild className="md:h-20 md:p-0">
+              <div className='flex justify-start gap-5'>
+                <div className="flex aspect-square size-15 items-center rounded-lg p-3">
+                  {/* <HandFist className="size-4" /> */}
+                  <img src={logo}/>
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight" onClick={() => navigate("/home")}>
                   <span className="truncate font-medium">FUExams</span>
                   <span className="truncate text-xs">{(currentUser?.role)?.toUpperCase()}</span>
                 </div>
-              </a>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

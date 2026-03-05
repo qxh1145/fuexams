@@ -12,25 +12,40 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { cn } from "@/lib/utils"
-const ResultModal = (totalCorrectAnswer: any) => {
+import { useState } from "react"
+const ResultModal = ({totalCorrectAnswer} : {totalCorrectAnswer : any}) => {
+    const [isSubmitted, setIsSubmitted] = useState(false);
     return (
         <div>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button variant={'ghost'} size={'sm'} className='border hover:cursor-pointer hover:bg-green-300 '>Finish</Button>
+                    <Button onClick={() => console.log("Total correct answer: ", totalCorrectAnswer)} variant={'ghost'} size={'sm'} className='border hover:cursor-pointer hover:bg-green-300 '>Finish</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
-                    <AlertDialogHeader>
+                    {isSubmitted === false ?
+                        <>
+                            <AlertDialogHeader>
+                                Confirm submit your question
+                            </AlertDialogHeader>
+                            <AlertDialogDescription>
+                                Are you sure you want to submit your answers? Please review them carefully before submitting.
+                            </AlertDialogDescription>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel variant={"destructive"}>Cancel</AlertDialogCancel>
+                                <Button onClick={() => setIsSubmitted(true)}>Finish</Button>
 
-                    </AlertDialogHeader>
-                        Confirm submit your question
-                    <AlertDialogDescription>
-                        Are you sure you want to submit your answers? Please review them carefully before submitting.
-                    </AlertDialogDescription>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel variant={"destructive"}>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => console.log("Correct: ",totalCorrectAnswer)}>Submit</AlertDialogAction>
-                    </AlertDialogFooter>
+                                {/*Plan: update correct answer in next term */}
+                            </AlertDialogFooter>
+                        </>
+
+                        :
+                        <AlertDialogHeader>
+                            <AlertDialogAction onClick={() => {
+                                setIsSubmitted(false)
+                                
+                            }}>Close</AlertDialogAction>
+                        </AlertDialogHeader>
+                    }
                 </AlertDialogContent>
             </AlertDialog>
         </div>
