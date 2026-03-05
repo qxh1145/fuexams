@@ -35,7 +35,7 @@ export const createPaymentLink = async (req, res) => {
     const frontendBaseUrl =
       process.env.NODE_ENV === "production"
         ? process.env.FRONTEND_BASE_URL
-        : "http://localhost:5173";
+        : "http://localhost:5174";
 
     //data gui len payos
     const body = {

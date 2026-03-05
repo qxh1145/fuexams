@@ -30,6 +30,8 @@ const TestProcess = () => {
     const questionList = currentExam?.questions || [];
     const totalQuestions = questionList.length;
 
+    console.log(totalQuestions);
+
     //tinh tong so cau lam dung
     const totalCorrectAnswer = useMemo(() => {
         let score = 0;
@@ -81,6 +83,11 @@ const TestProcess = () => {
     }
 
 
+    const handleResetQuestion = () => {
+        setIndex(0)
+        setUserAnswers({});
+    }
+
 
 
     // 5. Hàm tính toán Class CSS cho từng nút (Dynamic Styling)
@@ -123,7 +130,7 @@ const TestProcess = () => {
 
                     <div className='flex items-center gap-5 '>
                         <p>Question: {index + 1} / {totalQuestions}</p>
-                        <ResultModal totalCorrectAnswer={totalCorrectAnswer} />
+                        <ResultModal totalCorrectAnswer={totalCorrectAnswer} totalQuestions={totalQuestions} handleResetQuestion={handleResetQuestion}/>
                     </div>
 
                     <div className='flex justify-between gap-15 italic'>
