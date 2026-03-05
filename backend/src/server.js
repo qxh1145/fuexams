@@ -6,6 +6,7 @@ import authRoute from './route/authRoute.js';
 import userRoute from './route/userRoute.js';
 import examRoute from './route/examsRoute.js';
 import orderRouter from './route/orderRoute.js';
+import aiRoute from './route/aiRoute.js';
 
 import cookieParser from 'cookie-parser'
 import { protectedRoute } from './middleware/authMiddleware.js';
@@ -13,7 +14,6 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5002
 const app = express();
-
 
 
 //middleware
@@ -24,6 +24,7 @@ app.use(cors());
 app.use('/auth', authRoute)
 app.use('/exams', examRoute)
 app.use('/payment', orderRouter)
+app.use('/ai', aiRoute)
 //private route
 app.use(protectedRoute)
 app.use('/users', userRoute)

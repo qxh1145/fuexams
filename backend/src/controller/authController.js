@@ -41,7 +41,6 @@ export const signUp = async (req, res) => {
       displayName: `${firstname} ${lastname}`,
     });
 
-    //return
     return res.status(201).json({message: "Successfully created"});
   } catch (error) {
     console.log(`Loi khi goi signup`, error);

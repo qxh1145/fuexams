@@ -22,8 +22,10 @@ export const protectedRoute = (req, res, next) => {
             .status(403)
             .json({ message: "Access token expire or incorrect" });
         }
+        console.log("Data in token: ",decodedUser)
         //tim user
         const user = await User.findById(decodedUser.userId).select('-hashedPassword');
+        console.log("User data in database: ",user)
 
         if(!user) {
             return res.status(404).json({message: "cannot find user"})

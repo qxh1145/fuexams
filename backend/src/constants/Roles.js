@@ -1,10 +1,10 @@
 
-const ROLES = {
+export const ROLES = {
     ADMIN: 'admin',
     PREMIUM: 'premium',
     BASIC: 'basic',
 }
-const PAYMENT_STATUS = {
+export const PAYMENT_STATUS = {
     PAID: 'Paid',
     PENDING: 'Pending',
     CANCELLED: 'Cancelled',
@@ -13,4 +13,3 @@ const PAYMENT_STATUS = {
 
 }
 
-module.exports = {ROLES, PAYMENT_STATUS}

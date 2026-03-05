@@ -1,4 +1,4 @@
-const checkRoles = (allowedRoles) => {
+export const checkRoles = (allowedRoles) => {
     return (req,res,next) => {
         if(!req.user) {
             return res.status(401).json({message: "You are not login yet"})
@@ -12,4 +12,4 @@ const checkRoles = (allowedRoles) => {
         }
     } 
 }
-module.exports = checkRoles
+export default checkRoles
