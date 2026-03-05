@@ -5,7 +5,6 @@ import App from "./App.tsx";
 import { store } from "@/app/store.ts";
 import { Provider } from "react-redux";
 
-console.log("TEST STORE STATE:", store.getState());
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
