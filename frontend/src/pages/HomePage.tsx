@@ -79,7 +79,7 @@ const HomePage = () => {
             speed={2}
             delay={0}
             color="#000000"
-            shineColor="#ffffff"
+            shinenuColor="#ffffff"
             spread={120}
             direction="left"
             yoyo={false}
