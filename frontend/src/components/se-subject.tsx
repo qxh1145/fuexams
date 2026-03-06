@@ -43,7 +43,7 @@ const SeSubject = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-5 p-7 from-muted/50 to-background h-full bg-gradient-to-b from-30%">
                 {filteredFolder('Subject').filter(subject => semestersInMajor.includes(subject.parentId || "") && subject.belongto?.includes('SE')).map((f) => (
                     <>
-                        <FolderDisplay className="border flex  " key={f._id} folder={f} onClick={() => navigate(`/test/${f._id}`)} />
+                        <FolderDisplay className="border flex " key={f._id} folder={f} onClick={() => navigate(`/test/${f._id}`)} />
                     </>
                 ))}
             </div>

@@ -1,14 +1,13 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import Sidebar from '@/pages/Sidebar'
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { getFolder } from "@/features/exams/examSlice";
 import FolderDisplay from './folder-display';
 import { useNavigate, useParams } from 'react-router';
 
-const McSubject = () => {
+const SeSubject = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const mj = useParams();
     const { folder, isLoading } = useAppSelector((state) => state.folder)
 
     useEffect(() => {
@@ -34,19 +33,18 @@ const McSubject = () => {
 
     //logic xu ly loc mon hoc
     const seId = "657000000000000000000002"
-    const semestersInMajor = useMemo(()=> {
-        const semesters = folder.filter(f => f.type === 'Semester' && f.parentId === seId )
+    const semestersInMajor = useMemo(() => {
+        const semesters = folder.filter(f => f.type === 'Semester' && f.parentId === seId)
         return semesters.map(s => s._id)
-    },[folder, seId])  
+    }, [folder, seId])
 
     return (
         <Sidebar>
-            <div >
-                <h3 className="pl-6 pt-6">Subjects </h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-5 p-7">
-                {filteredFolder('Subject').filter(subject => semestersInMajor.includes(subject.parentId || "")).map((f) => (
-                    <FolderDisplay className="border flex  " key={f._id} folder={f} onClick={() => navigate(`/${f.name}/test`)}/>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-5 p-7 from-muted/50 to-background h-full bg-gradient-to-b from-30%">
+                {filteredFolder('Subject').filter(subject => semestersInMajor.includes(subject.parentId || "") && subject.belongto?.includes('MC')).map((f) => (
+                    <>
+                        <FolderDisplay className="border flex " key={f._id} folder={f} onClick={() => navigate(`/test/${f._id}`)} />
+                    </>
                 ))}
             </div>
 
@@ -55,4 +53,4 @@ const McSubject = () => {
     )
 }
 
-export default McSubject
+export default SeSubject

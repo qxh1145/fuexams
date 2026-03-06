@@ -1,6 +1,6 @@
-import Sidebar from "@/pages/Sidebar";
 import React from "react";
 import {
+  Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,

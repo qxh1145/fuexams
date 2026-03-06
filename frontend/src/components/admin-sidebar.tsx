@@ -24,57 +24,6 @@ export const AdminSidebar = () => {
   const navigate = useNavigate()
   const { currentUser } = useAppSelector((state) => state.auth)
   return (
-    // <Sidebar collapsible="icon"> {/* Thêm collapsible nếu muốn co giãn */}
-    //   <SidebarHeader className="p-4 font-bold text-xl">
-    //     <SidebarMenu>
-    //       <SidebarMenuItem>
-    //         <SidebarMenuButton>
-    //           Admin Panel
-    //         </SidebarMenuButton>
-    //       </SidebarMenuItem>
-    //     </SidebarMenu>
-    //   </SidebarHeader>
-
-    //   <SidebarContent>
-    //     <SidebarGroup>
-    //       <SidebarGroupLabel>Content Management</SidebarGroupLabel>
-    //       <SidebarGroupContent>
-    //         <SidebarMenu>
-
-    //           <SidebarMenuItem>
-    //             <SidebarMenuButton>
-
-    //             </SidebarMenuButton>
-    //           </SidebarMenuItem>
-
-
-    //         </SidebarMenu>
-    //       </SidebarGroupContent>
-
-    //       <SidebarGroupContent>
-    //         <SidebarMenu>
-    //           <SidebarMenuItem>
-    //             <SidebarMenuButton>
-    //               Exam Management
-    //             </SidebarMenuButton>
-    //           </SidebarMenuItem>
-
-    //           <SidebarMenuItem>
-    //             <SidebarMenuButton onClick={() => navigate("/admin-dashboard/user-list")}>
-    //               View All User
-    //             </SidebarMenuButton>
-    //           </SidebarMenuItem>
-    //         </SidebarMenu>
-    //       </SidebarGroupContent>
-    //     </SidebarGroup>
-    //   </SidebarContent>
-
-    //   <SidebarFooter>
-    //     <NavUser user={currentUser} />
-    //   </SidebarFooter>
-    // </Sidebar>
-
-
     <Sidebar>
       <SidebarHeader><h1 className="w-full text-center font-bold text-2xl">ADMIN PANEL</h1></SidebarHeader>
       <SidebarContent>
