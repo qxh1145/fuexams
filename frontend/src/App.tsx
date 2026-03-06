@@ -12,7 +12,7 @@ import { TakingTest } from "./pages/TakingTest";
 import CreateExams from "./pages/CreateExams";
 import MyExams from "./pages/MyExams";
 import UpGradePage from "./pages/UpGradePage";
-import FueAi from "./pages/FueAi";
+import FueAi from "./pages/chatbot/FueAi";
 import AdminDashBoard from "./pages/AdminDashBoard";
 import UserList from "./pages/admin/UserList";
 

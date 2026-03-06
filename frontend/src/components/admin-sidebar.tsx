@@ -18,11 +18,6 @@ import { NavUser } from "./nav-user";
 import { useAppSelector } from "@/hooks/useRedux";
 import { Button } from "./ui/button";
 
-const items = [
-  { title: "Dashboard", url: "/admin/dashboard", icon: Home },
-  { title: "Users", url: "/admin/users", icon: Inbox },
-  { title: "Settings", url: "/admin/settings", icon: Settings },
-]
 
 // Nhớ viết hoa chữ cái đầu (PascalCase)
 export const AdminSidebar = () => {
