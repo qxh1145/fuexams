@@ -50,6 +50,9 @@ function App() {
             
             <Route path="/mc" element={<McSubject />} />
             <Route path="/se" element={<SeSubject />} />
+            <Route path="/ai" element={<Comingsoon />} />
+            <Route path="/ia" element={<Comingsoon />} />
+            <Route path="/gd" element={<Comingsoon />} />
             
             <Route path="/my-exams" element={<MyExams />} />
             <Route path="/upgrade" element={<UpGradePage />} />
@@ -59,7 +62,7 @@ function App() {
           <Route element={<PrivateRoles allowedRoles={[ROLES.ADMIN, ROLES.PREMIUM]} />}>
             <Route path="/subjects-src" element={<Comingsoon />} />
             <Route path="/create-exams" element={<CreateExams />} />
-            <Route path="/fue-ai" element={<FueAi />} />
+            <Route path="/fue-ai" element={<Comingsoon />} />
           </Route>
 
           {/* Level 3: Admin Only */}
