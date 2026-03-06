@@ -2,6 +2,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from "./ui
 import { Button } from "./ui/button"
 import { useNavigate } from "react-router"
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux"
+import { Trash2 } from "lucide-react"
 
 const MyExam = () => {
     const navigate = useNavigate()
@@ -10,7 +11,8 @@ const MyExam = () => {
     console.log("my exam" ,exams)
     return (
         <div className="w-full gap-6 grid grid-cols-3 p-3">
-            {exams.filter((exam) => exam.authorId === currentUser?.username ).map((exam) => (
+            {!exams.filter((exam) => exam.authorId === currentUser?._id ) && <div>No exam</div>}
+            {exams.filter((exam) => exam.authorId === currentUser?._id ).map((exam) => (
                 <Item key={exam._id} variant={"outline"}>
                     <ItemContent>
                         <ItemTitle>{exam.title}</ItemTitle>
@@ -22,6 +24,10 @@ const MyExam = () => {
                         <Button variant="outline" size="sm" onClick={() => navigate(`/test/do-test/${exam.slug}`)}>
                             Take exam
                         </Button>
+                        {currentUser?._id === exam.authorId ?
+                         <Button variant={"ghost"}><Trash2 color="red"/></Button>
+                         :  null}
+                        
                     </ItemActions>
                 </Item>
             ))}

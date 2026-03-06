@@ -119,7 +119,7 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
 
   return (
     <Sidebar
-      collapsible="icon"
+      collapsible="offcanvas"
       className="overflow-hidden *:data-[sidebar=sidebar]:flex-col"
       {...props}
     >
@@ -133,9 +133,9 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="md:h-20 md:p-0">
               <div className='flex justify-start gap-5'>
-                <div className="flex aspect-square size-15 items-center rounded-lg p-3">
+                <div className="flex aspect-square size-15 rounded-lg p-3 ">
                   {/* <HandFist className="size-4" /> */}
-                  <img src={logo}/>
+                  <img className='h-full w-full object-contain' src={logo}/>
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight" onClick={() => navigate("/home")}>
                   <span className="truncate font-medium">FUExams</span>

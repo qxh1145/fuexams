@@ -13,12 +13,10 @@ const FolderDisplay = ({folder,className= "", ...props}: FolderDisplayProps) => 
   let mName = folder.name;
   const majorObj = FilterMajor.find((fm) => fm.value === mName)
   return (
-    <div className={`items-center flex-col ${className}`} {...props}>
-      <Button variant='secondary' className="w-full h-full flex items-center">
-        <Folder className="shrink-0"/>
+    <div className={`max-w-30 flex flex-col items-center hover:cursor-pointer ${className}`} {...props}>
+        <Folder color="#72C8F8" size={50} fill="#72C8F8" />
         <span className="text-center flex-1 truncate">{ majorObj ? majorObj.label : folder.name}</span>
         {/* <span>{folder.type}</span> */}
-      </Button>
     </div>
 
   )

@@ -1,11 +1,11 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import Sidebar from '@/pages/Sidebar'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { getFolder } from "@/features/exams/examSlice";
 import FolderDisplay from './folder-display';
 import { useNavigate, useParams } from 'react-router';
 
-const SeSubject = () => {
+const McSubject = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { folder, isLoading } = useAppSelector((state) => state.folder)
@@ -32,19 +32,13 @@ const SeSubject = () => {
     }
 
     //logic xu ly loc mon hoc
-    const seId = "657000000000000000000002"
-    const semestersInMajor = useMemo(() => {
-        const semesters = folder.filter(f => f.type === 'Semester' && f.parentId === seId)
-        return semesters.map(s => s._id)
-    }, [folder, seId])
+    //logic xu ly loc mon hoc
 
     return (
         <Sidebar>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-5 p-7 from-muted/50 to-background h-full bg-gradient-to-b from-30%">
-                {filteredFolder('Subject').filter(subject => semestersInMajor.includes(subject.parentId || "") && subject.belongto?.includes('MC')).map((f) => (
-                    <>
-                        <FolderDisplay className="border flex " key={f._id} folder={f} onClick={() => navigate(`/test/${f._id}`)} />
-                    </>
+            <div className="grid grid-cols-1 md:grid-cols-10 gap-3 p-7 from-muted/50 to-background h-full bg-gradient-to-b ">
+                {filteredFolder('Subject').filter(subject => subject.belongto?.includes('MC')).map((f) => (
+                    <FolderDisplay className=" " key={f._id} folder={f} onClick={() => navigate(`/test/${f._id}`)} />
                 ))}
             </div>
 
@@ -53,4 +47,4 @@ const SeSubject = () => {
     )
 }
 
-export default SeSubject
+export default McSubject

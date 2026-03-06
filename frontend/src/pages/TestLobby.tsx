@@ -10,13 +10,14 @@ import {
     ItemMedia,
     ItemTitle,
 } from "@/components/ui/item"
-import { BadgeCheckIcon, ChevronLeft, ChevronRightIcon, ChevronsLeft } from 'lucide-react'
+import { BadgeCheckIcon, ChevronLeft, ChevronRightIcon, ChevronsLeft, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux'
 import { getExams } from '@/features/exams/testSlice.js'
 import { getFolder } from '@/features/exams/examSlice'
 import { useNavigate, useParams } from 'react-router'
 import { string } from 'zod'
+import { ROLES } from '@/constants/roles'
 
 
 const TestLobby = () => {
@@ -26,6 +27,7 @@ const TestLobby = () => {
 
     const { exams, isLoading } = useAppSelector((state) => state.exam)
     const { folder } = useAppSelector((state) => state.folder)
+    const {currentUser} = useAppSelector((state) =>state.auth)
 
 
     useEffect(() => {
@@ -34,7 +36,7 @@ const TestLobby = () => {
     }, [dispatch])
 
     console.log('hello exams', folder.filter((f) => f._id === subjectID.folderid))
-    
+
     return (
         <Sidebar>
             <header>
@@ -46,13 +48,16 @@ const TestLobby = () => {
                         <ItemContent>
                             <ItemTitle>{exam.title}</ItemTitle>
                             <ItemDescription>
-                                Duration: {exam.duration} minutes <br/> Number of questions: {exam.questions.length}
+                                Duration: {exam.duration} minutes <br /> Number of questions: {exam.questions.length}
                             </ItemDescription>
                         </ItemContent>
                         <ItemActions>
                             <Button variant="outline" size="sm" onClick={() => navigate(`/test/do-test/${exam.slug}`)}>
                                 Take exam
                             </Button>
+                            {currentUser?._id === exam.authorId || currentUser?.username == ROLES.ADMIN ?
+                                <Button variant={"ghost"}><Trash2 color="red" /></Button>
+                                : null}
                         </ItemActions>
                     </Item>
                 ))}

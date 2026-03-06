@@ -17,6 +17,7 @@ import { SearchInput } from "@/components/search-input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { useNavigate } from "react-router";
+import logo from "@/assets/logo-fue.png"
 
 //Dinh nghia props 
 interface SidebarLayoutProps {
@@ -33,7 +34,7 @@ interface IAll {
 export default function Sidebar({ children, sidebar }: SidebarLayoutProps) {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate();
-  const sidebarComponent = sidebar || <AppSidebar/>
+  const sidebarComponent = sidebar || <AppSidebar />
   return (
     <SidebarProvider
       style={
@@ -46,7 +47,12 @@ export default function Sidebar({ children, sidebar }: SidebarLayoutProps) {
       <SidebarInset className="from-muted/50 to-background h-full bg-gradient-to-b from-30%" >
         <header className="bg-background sticky top-0 flex shrink-0 items-center border-b p-4 z-10 ">
           <div className="grid grid-cols-3 w-full">
-            <SidebarTrigger size="icon-lg" className="-ml-1" />
+            <div className="flex items-center">
+              <SidebarTrigger size="icon-lg" className="-ml-1" />
+              {/* <div className="size-10"><img src={logo} /></div> */}
+
+            </div>
+
             {/* <Input className="" /> */}
             <SearchInput />
             <Popover open={open} onOpenChange={setOpen}>

@@ -11,7 +11,7 @@ import axiosClient from "@/service/axiosClient";
 //b1 dinh nghia cac interface
 
 interface User {
-    id: string;
+    _id: string;
     email: string;
     firstname: string;
     lastname: string;

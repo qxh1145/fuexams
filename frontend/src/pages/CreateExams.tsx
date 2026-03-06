@@ -91,7 +91,7 @@ const CreateExams = () => {
                 ...examForm,
                 title: examForm.title,
                 folderId: examForm.folderId || null,
-                authorId: currentUser?.username || 'unknown',
+                authorId: currentUser?._id || 'unknown',
                 durationMinutes: examForm.duration,
                 slug: examForm.title.toLowerCase().replace(/ /g, "-"),
                 questions: question.map((q) => ({
