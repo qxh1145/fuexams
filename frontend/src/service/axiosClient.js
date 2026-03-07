@@ -37,7 +37,7 @@ const handleLogout = async () => {
   } finally {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
-    window.location.href = "/auth/signin";
+    window.location.href = "/signin";
   }
 };
 
@@ -53,6 +53,10 @@ axiosClient.interceptors.response.use(
     switch (status) {
       // het han token / chua dang nhap
       case 401: {
+        // Do not redirect or trigger logout if the 401 is from a login attempt
+        if (error.config && error.config.url && error.config.url.includes("auth/signin")) {
+          break;
+        }
         await handleLogout();
         break;
       }

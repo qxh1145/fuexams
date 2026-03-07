@@ -27,7 +27,7 @@ export function LoginForm({
   //lay ham gui thu
   const dispatch = useAppDispatch();
   //lay du lieu tu store
-  const {isLoading, error } = useAppSelector((state) => state.auth)
+  const { isLoading, error } = useAppSelector((state) => state.auth)
 
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ export function LoginForm({
     try {
       await dispatch(loginUser(data)).unwrap()
       navigate("/home")
-    }catch(err) {
+    } catch (err) {
       console.log('login fail ', err);
     }
   };
@@ -99,8 +99,8 @@ export function LoginForm({
                   <p className="text-destructive text-sm">{errors.password.message}</p>
                 )}
               </div>
-              <Button type="submit" className="w-full">
-                Login
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Logging in..." : "Login"}
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">
@@ -136,7 +136,7 @@ export function LoginForm({
                   <span className="sr-only">Login with Meta</span>
                 </Button>
               </div>
-              
+
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <a href="/signup" className="underline underline-offset-4">
