@@ -1,7 +1,6 @@
-
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistory from "../model/ChatHistory.js";
-
+import { model } from "mongoose";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -10,23 +9,23 @@ export const chatWithAI = async (req, res) => {
     const { prompt } = req.body;
 
     const userId = req.user._id;
-    console.log("hello: ", userId)
+    console.log("hello: ", userId);
 
     if (!prompt) {
       return res.status(400).json({ message: "Please enter question" });
     }
 
-    let chatDoc = await ChatHistory.findOne({userId: userId});
+    let chatDoc = await ChatHistory.findOne({ userId: userId });
 
-    if(!chatDoc){
-      chatDoc = new ChatHistory({userId: userId, message: []});
+    if (!chatDoc) {
+      chatDoc = new ChatHistory({ userId: userId, message: [] });
     }
-    console.log("chatDoc: ", chatDoc)
+    console.log("chatDoc: ", chatDoc);
 
-    const fomattedHistory = chatDoc.message.map(msg => ({
+    const fomattedHistory = chatDoc.message.map((msg) => ({
       role: msg.role,
-      parts: [{text: msg.message}]
-    }))
+      parts: [{ text: msg.message }],
+    }));
 
     const systemInstruction = `
             Bạn là một Mentor chuyên về Công nghệ thông tin (IT) và Truyền thông đa phương tiện.
@@ -44,8 +43,8 @@ Quy tắc:
 - Trả lời ngắn gọn, rõ ràng, tập trung vào kiến thức chuyên môn.
         `;
     const model = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash",
-        systemInstruction: systemInstruction,
+      model: process.env.GEMINI_MODEL,
+      systemInstruction: systemInstruction,
     });
 
     const chatSession = model.startChat({
@@ -55,14 +54,14 @@ Quy tắc:
     const result = await chatSession.sendMessage(prompt);
     const responseText = result.response.text();
 
-    chatDoc.message.push({role: 'user', message: prompt})
-    chatDoc.message.push({role: 'model', message: responseText})
+    chatDoc.message.push({ role: "user", message: prompt });
+    chatDoc.message.push({ role: "model", message: responseText });
 
     await chatDoc.save();
-    return res.status(200).json({ reply: responseText});
-
+    return res.status(200).json({ reply: responseText });
   } catch (error) {
     console.error("Error while calling Geminni API: ", error);
-    return res.status(500).json({message: "Error while calling gemini API"})
+    console.log(model);
+    return res.status(500).json({ message: "Error while calling gemini API" });
   }
 };

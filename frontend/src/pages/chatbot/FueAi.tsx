@@ -1,14 +1,47 @@
-import React from 'react'
-import SidebarLayout from "@/pages/Sidebar"; 
-import { AdminSidebar } from '@/components/admin-sidebar';
+import SidebarLayout from "@/pages/Sidebar";
 import ChatHistory from '@/components/chat-bot/chat-history';
-import { ChartArea } from 'lucide-react';
 import ChatArea from '@/components/chat-bot/chat-area';
+import ChatBubble from '@/components/chat-bot/chat-bubble';
+import { useAppSelector } from '@/hooks/useRedux';
+import TextType from "@/components/TextType";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const FueAi = () => {
+  const { chatHistory, isLoading } = useAppSelector((state) => state.ai);
+  console.log(chatHistory)
   return (
     <SidebarLayout sidebar={<ChatHistory />}>
-      <ChatArea />
+      <div className='flex flex-col relative overflow-hidden bg-background h-[calc(100vh-73px)]'>
+        <ScrollArea className="flex-1 p-4 pb-24 h-full">
+          {chatHistory && chatHistory.length > 0 ?
+            <div className="flex flex-col gap-4">
+              {chatHistory.map((msg: any, index: number) => (
+                <div key={index} className={`flex ${msg.role === "user" ? 'justify-end' : 'justify-start'}`}>
+                  <ChatBubble role={msg.role} reply={msg.prompt} />
+                </div>
+              ))}
+              {isLoading && <ChatBubble role={'model'} reply={"load"} />}
+            </div> : <div className="text-center space-y-4 pb-10 flex justify-center min-h-[calc(100vh-250px)] items-center">
+              <TextType
+                typingSpeed={80}
+                pauseDuration={500000}
+                showCursor
+                cursorCharacter="_"
+                text={["Welcome to FUE AI! Good to see you!", "Build some amazing experiences!"]}
+                deletingSpeed={50}
+                variableSpeedEnabled={false}
+                variableSpeedMin={60}
+                variableSpeedMax={120}
+                cursorBlinkDuration={0.4}
+                className="text-2xl font-mono"
+              />
+            </div>}
+        </ScrollArea>
+
+        <div className='absolute bottom-0 left-0 right-0 p-4 bg-background flex justify-center shrink-0 z-10'>
+          <ChatArea />
+        </div>
+      </div>
     </SidebarLayout>
   )
 }

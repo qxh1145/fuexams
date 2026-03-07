@@ -5,6 +5,7 @@ import examReducer from '@/features/exams/testSlice.ts'
 import paymentReducer from '@/features/payment/paymentSlice.ts'
 import userReducer from '@/features/users/userSlice.ts'
 import transactionSlice from "@/features/payment/transactionSlice.ts";
+import aiSlice from  "@/features/ai/aiSlice.ts"
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -12,7 +13,8 @@ export const store = configureStore({
     exam: examReducer,
     payment: paymentReducer,
     user: userReducer,
-    transaction: transactionSlice
+    transaction: transactionSlice,
+    ai: aiSlice
   },
   devTools: import.meta.env.DEV
 });

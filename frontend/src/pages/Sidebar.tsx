@@ -81,7 +81,7 @@ export default function Sidebar({ children, sidebar }: SidebarLayoutProps) {
         </header>
 
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 flex-1">
           {children}
         </div>
 

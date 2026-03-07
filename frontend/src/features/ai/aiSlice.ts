@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import axiosClient from "@/service/axiosClient";
-import reducer from "../auth/authSlice";
 
-interface UserPrompt {
-  message: string;
+interface Message {
+  role: 'user' | 'model'
+  prompt: string;
 }
 interface AIResponse {
   reply: string | null;
@@ -13,21 +13,27 @@ interface InitialState {
   isLoading: boolean;
   error: string | null;
   reply: string | null;
+  chatHistory: Message[];
 }
 
 const initialState: InitialState = {
-  isLoading: true,
+  isLoading: false,
   error: null,
   reply: null,
+  chatHistory: [],
 };
 
 export const getAIResponse = createAsyncThunk<
   AIResponse,
-  UserPrompt,
+  Message,
   { rejectValue: string }
 >("ai/getAIResponse", async (payload, thunkAPI) => {
   try {
-    const response = axiosClient.post("/ai/chat-bot", payload);
+    // const data = {
+    //   prompt: payload.prompt
+    // }
+    const response = await axiosClient.post("/ai/chat-bot", payload);
+    console.log(response)
     return response;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
@@ -38,28 +44,33 @@ export const getAIResponse = createAsyncThunk<
 
 
 const aiSlice = createSlice({
-    name: "aiSlice",
-    initialState,
-    reducers: {
+  name: "aiSlice",
+  initialState,
+  reducers: {
 
-    },
-    extraReducers: (builder) => {
-        builder.addCase(getAIResponse.rejected, (state) => {
-            state.error = "Error while get Gemini API";
-            state.reply = null;
-            state.isLoading = false;
-        })
-        builder.addCase(getAIResponse.fulfilled, (state, action: PayloadAction<AIResponse>) => {
-            state.error = null;
-            state.reply = action.payload.reply;
-            state.isLoading = false;
-        })
-        builder.addCase(getAIResponse.rejected, (state) => {
-            state.error = null;
-            state.reply = null;
-            state.isLoading = true;
-        })
-    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getAIResponse.rejected, (state) => {
+      state.error = "Error while get Gemini API";
+      state.reply = null;
+      state.isLoading = false;
+      state.chatHistory.push({role: "model", prompt: "Chatbot error"})
+    })
+    builder.addCase(getAIResponse.fulfilled, (state, action: PayloadAction<AIResponse>) => {
+      state.error = null;
+      state.reply = action.payload.reply;
+      state.isLoading = false;
+      state.chatHistory.push({ role: 'model', prompt: action.payload.reply || "Sorry i can't answer this question" })
+
+    })
+    builder.addCase(getAIResponse.pending, (state, action) => {
+      state.error = null;
+      state.reply = null;
+      state.isLoading = true;
+      const userText = action.meta.arg.prompt ? action.meta.arg.prompt : action.meta.arg;
+      state.chatHistory.push({ role: 'user', prompt: String(userText) })
+    })
+  }
 })
 
 export default aiSlice.reducer
