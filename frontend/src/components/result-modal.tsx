@@ -64,7 +64,7 @@ const ResultModal = ({ totalCorrectAnswer, totalQuestions, handleResetQuestion }
                         :
                         <>
                             <AlertDialogHeader>
-                                <div className="text-2xl">Your score: <span className="text-green-500 font-bold size-5 ">{score}</span> / 10 </div>
+                                <div className="text-2xl">Your score: <span className="text-green-500 font-bold size-5 ">{score.toFixed(1)}</span> / 10 </div>
                                 <div>{renderConratMess()}</div>
                             </AlertDialogHeader>
 
