@@ -6,7 +6,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export const chatWithAI = async (req, res) => {
   try {
-    const { prompt } = req.body;
+    const { prompt, title, chatId } = req.body;
 
     const userId = req.user._id;
     console.log("hello: ", userId);
@@ -15,12 +15,23 @@ export const chatWithAI = async (req, res) => {
       return res.status(400).json({ message: "Please enter question" });
     }
 
-    let chatDoc = await ChatHistory.findOne({ userId: userId });
+    // let chatDoc = await ChatHistory.findOne({ userId: userId });
 
-    if (!chatDoc) {
-      chatDoc = new ChatHistory({ userId: userId, message: [] });
+    // if (!chatDoc) {
+    //   chatDoc = new ChatHistory({ userId: userId, message: [], title: title });
+    // }
+    // console.log("chatDoc: ", chatDoc);
+    let chatDoc;
+
+    if (chatId) {
+      chatDoc = await ChatHistory.findOne({ _id: chatId, userId: userId });
+      if (!chatDoc) return res.status(404).json({ message: "Chat not found" });
+    } else {
+      const newTitle =
+        title ||
+        (prompt.length > 30 ? prompt.substring(0, 30) + "..." : prompt);
+      chatDoc = new ChatHistory({ userId: userId, message: [], title: newTitle });
     }
-    console.log("chatDoc: ", chatDoc);
 
     const fomattedHistory = chatDoc.message.map((msg) => ({
       role: msg.role,
@@ -42,12 +53,12 @@ Quy tắc:
 - Nếu câu hỏi ngoài lĩnh vực này, hãy từ chối lịch sự và yêu cầu người dùng hỏi đúng chuyên môn.
 - Trả lời ngắn gọn, rõ ràng, tập trung vào kiến thức chuyên môn.
         `;
-    const model = genAI.getGenerativeModel({
+    const aiModel = genAI.getGenerativeModel({
       model: process.env.GEMINI_MODEL,
       systemInstruction: systemInstruction,
     });
 
-    const chatSession = model.startChat({
+    const chatSession = aiModel.startChat({
       history: fomattedHistory,
     });
 
@@ -58,10 +69,31 @@ Quy tắc:
     chatDoc.message.push({ role: "model", message: responseText });
 
     await chatDoc.save();
-    return res.status(200).json({ reply: responseText });
+    return res.status(200).json({ reply: responseText, chatId: chatDoc._id });
   } catch (error) {
     console.error("Error while calling Geminni API: ", error);
-    console.log(model);
     return res.status(500).json({ message: "Error while calling gemini API" });
+  }
+};
+
+export const getChatHistory = async (req, res) => {
+  try {
+    const  userId  = req.user._id;
+    const allChatHistory = await ChatHistory.find({ userId: userId }).sort({updatedAt: -1});
+    return res.status(200).json(allChatHistory);
+  } catch (error) {
+    res.status(500).json({ message: "internal server error" });
+  }
+};
+export const getChatByChatId = async (req, res) => {
+  try {
+    const { chatid } = req.params;
+    const conversation = await ChatHistory.findOne({
+      _id: chatid,
+    });
+
+    return res.status(200).json(conversation)
+  } catch (error) {
+    return res.status(500).json({ error});
   }
 };

@@ -66,7 +66,8 @@ function App() {
           <Route element={<PrivateRoles allowedRoles={[ROLES.ADMIN, ROLES.PREMIUM]} />}>
             <Route path="/subjects-src" element={<Comingsoon />} />
             <Route path="/create-exams" element={<CreateExams />} />
-            <Route path="/fue-ai" element={<FueAi />} />
+            <Route path="/fue-ai/" element={<FueAi />} />
+            <Route path="/fue-ai/:chatid" element={<FueAi />} />
           </Route>
 
           {/* Level 3: Admin Only */}

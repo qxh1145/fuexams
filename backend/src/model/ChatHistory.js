@@ -4,11 +4,11 @@ const messageSchema = new Schema(
         role: {
             type: String,
             enum: ["user", "model"],
-            require: true
+            required: true
         },
         message: {
             type: String,
-            require: true,
+            required: true,
 
         }
     }, {_id: false}
@@ -20,7 +20,10 @@ const chatHistorySchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "users",
             require: true,
-            unique: true
+        },
+        title: {
+            type: String,
+            required: true
         },
         message: [messageSchema]
     }, {timestamps: true}
