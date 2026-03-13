@@ -7,9 +7,12 @@ import userRoute from './route/userRoute.js';
 import examRoute from './route/examsRoute.js';
 import orderRouter from './route/orderRoute.js';
 import aiRoute from './route/aiRoute.js';
+import adminRoute from './route/adminRoute.js';
 
 import cookieParser from 'cookie-parser'
 import { protectedRoute } from './middleware/authMiddleware.js';
+import checkRoles from './middleware/checkPermission.js';
+import { ROLES } from './constants/Roles.js';
 dotenv.config();
 
 const PORT = process.env.PORT || 5002
@@ -28,6 +31,9 @@ app.use('/ai', aiRoute)
 //private route
 app.use(protectedRoute)
 app.use('/users', userRoute)
+
+app.use(checkRoles(ROLES.ADMIN))
+app.use('/admin', adminRoute)
 
 
 

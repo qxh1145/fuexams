@@ -1,7 +1,7 @@
 import jwt, { decode } from "jsonwebtoken";
 import User from "../model/Users.js";
 
-export const protectedRoute = (req, res, next) => {
+export const  protectedRoute = (req, res, next) => {
   try {
     //lay access token tu header
     const authHeader = req.headers["authorization"];

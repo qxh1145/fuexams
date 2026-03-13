@@ -68,6 +68,17 @@ export const AdminSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
+
+      <SidebarGroup>
+        <SidebarGroupLabel>Exams</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>View all exams</SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter>

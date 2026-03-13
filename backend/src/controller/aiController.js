@@ -94,6 +94,6 @@ export const getChatByChatId = async (req, res) => {
 
     return res.status(200).json(conversation)
   } catch (error) {
-    return res.status(500).json({ error});
+    return res.status(500).json({ error });
   }
 };
